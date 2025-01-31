@@ -17,7 +17,8 @@
 
 #define MAX_SPACES 100
 
-typedef struct _Game {
+typedef struct _Game
+{
   Id player_location;
   Id object_location;
   Space *spaces[MAX_SPACES];
@@ -42,7 +43,7 @@ Id game_get_object_location(Game *game);
 
 Status game_set_object_location(Game *game, Id id);
 
-Command* game_get_last_command(Game *game);
+Command *game_get_last_command(Game *game);
 
 Status game_set_last_command(Game *game, Command *command);
 
