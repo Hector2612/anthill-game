@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*game_reader_initialize_game processes all the necessary data to initialize the game*/
 Status game_reader_initialize_game(Game *game, char *filename)
 {
     if (!game || !filename)
@@ -34,6 +35,7 @@ Status game_reader_initialize_game(Game *game, char *filename)
     return OK;
 }
 
+/*game_reader_load_spaces reads the file and loads the spaces into the game*/
 Status game_reader_load_spaces(Game *game, char *filename)
 {
     FILE *file = NULL;
@@ -56,8 +58,10 @@ Status game_reader_load_spaces(Game *game, char *filename)
 
     while (fgets(line, WORD_SIZE, file))
     {
-        if (strncmp("#s:", line, 3) == 0)
+        /*check each line of the file*/
+        if (strncmp("#s:", line, 3) == 0) 
         {
+            /*stores the information of the line*/
             toks = strtok(line + 3, "|");
             id = atol(toks);
             toks = strtok(NULL, "|");
@@ -74,12 +78,13 @@ Status game_reader_load_spaces(Game *game, char *filename)
 #ifdef DEBUG
             printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
 #endif
-
+            /*creates the space with the store id*/
             if (!(space = space_create(id)))
             {
                 return ERROR;
             }
 
+            /*saves the information in the new space*/
             space_set_name(space, name);
             space_set_north(space, north);
             space_set_east(space, east);
@@ -104,6 +109,7 @@ Status game_reader_load_spaces(Game *game, char *filename)
     return status;
 }
 
+/*game_reader_add_space adds the new processed space to the game*/
 Status game_reader_add_space(Game *game, Space *space)
 {
     if (!game || !space || (game->n_spaces >= MAX_SPACES))

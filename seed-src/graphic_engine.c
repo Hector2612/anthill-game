@@ -146,6 +146,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   {
     sprintf(str, "  Object location:%d", (int)obj_loc);
     screen_area_puts(ge->descript, str);
+
+    sprintf(str, "  Player location:%d", (int)id_act);
+    screen_area_puts(ge->descript, str);
   }
 
   /* Paint in the banner area */
