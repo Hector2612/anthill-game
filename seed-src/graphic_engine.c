@@ -97,6 +97,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     {
       sprintf(str, "  |        %3d|", (int)id_back);
       screen_area_puts(ge->map, str);
+      sprintf(str, "  |%11s|", space_get_name(game_get_space(game, id_back)));
+      screen_area_puts(ge->map, str);
       sprintf(str, "  |     %c     |", obj);
       screen_area_puts(ge->map, str);
       sprintf(str, "  +-----------+");
@@ -116,6 +118,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
       sprintf(str, "  | m0^    %3d|", (int)id_act);
       screen_area_puts(ge->map, str);
+      sprintf(str, "  |%11s|", space_get_name(game_get_space(game, id_act)));
+      screen_area_puts(ge->map, str);
       sprintf(str, "  |     %c     |", obj);
       screen_area_puts(ge->map, str);
       sprintf(str, "  +-----------+");
@@ -134,6 +138,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       sprintf(str, "  +-----------+");
       screen_area_puts(ge->map, str);
       sprintf(str, "  |        %3d|", (int)id_next);
+      screen_area_puts(ge->map, str);
+      sprintf(str, "  |%11s|", space_get_name(game_get_space(game, id_next)));
       screen_area_puts(ge->map, str);
       sprintf(str, "  |     %c     |", obj);
       screen_area_puts(ge->map, str);
