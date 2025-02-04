@@ -53,4 +53,14 @@ Status game_set_finished(Game *game, Bool finished);
 
 void game_print(Game *game);
 
+/**
+ * @brief It adds the new processed space to the game
+ * @author Profesores PPROG
+ *
+ * @param game a pointer to the game that must be initialized
+ * @param space a pointer to the space that must be added
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+Status game_add_space(Game *game, Space *space);
+
 #endif

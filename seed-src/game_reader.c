@@ -14,27 +14,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*game_reader_initialize_game processes all the necessary data to initialize the game*/
-Status game_reader_initialize_game(Game *game, char *filename)
-{
-    if (!game || !filename)
-    {
-        return ERROR;
-    }
-
-    if (game_create(game) == ERROR)
-    {
-        return ERROR;
-    }
-
-    if (game_reader_load_spaces(game, filename) == ERROR)
-    {
-        return ERROR;
-    }
-
-    return OK;
-}
-
 /*game_reader_load_spaces reads the file and loads the spaces into the game*/
 Status game_reader_load_spaces(Game *game, char *filename)
 {
@@ -91,7 +70,7 @@ Status game_reader_load_spaces(Game *game, char *filename)
             space_set_south(space, south);
             space_set_west(space, west);
 
-            if (game_reader_add_space(game, space) == ERROR)
+            if (game_add_space(game, space) == ERROR)
             {
                 space_destroy(space);
                 return ERROR;
@@ -107,18 +86,4 @@ Status game_reader_load_spaces(Game *game, char *filename)
     fclose(file);
 
     return status;
-}
-
-/*game_reader_add_space adds the new processed space to the game*/
-Status game_reader_add_space(Game *game, Space *space)
-{
-    if (!game || !space || (game->n_spaces >= MAX_SPACES))
-    {
-        return ERROR;
-    }
-
-    game->spaces[game->n_spaces] = space;
-    (game->n_spaces)++;
-
-    return OK;
 }
