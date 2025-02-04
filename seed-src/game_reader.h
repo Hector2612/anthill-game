@@ -21,7 +21,7 @@
  *
  * @param game a pointer to the game that must be initialized
  * @param filename a pointer to the name of the file with the data
- * @return OK, if everything goes well or ERROR if there was some mistake
+ * @return OK, if everything goes well or ERROR if there was some mistak
  */
 Status game_reader_load_spaces(Game *game, char *filename);
 
