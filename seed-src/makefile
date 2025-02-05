@@ -26,3 +26,6 @@ game_reader.o: game_reader.c game_reader.h
 
 clean: 
 	rm *.o
+
+clear:
+	rm *.o anthill
