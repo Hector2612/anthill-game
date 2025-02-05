@@ -15,6 +15,14 @@
 #include "game.h"
 #include "types.h"
 
+/**
+ * @brief depende on the action realized the program will do one thing or another
+ * @author Profesores PPROG
+ *
+ * @param game a pointer to game that we are using
+ * @param cmd a word with our movement or command
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
 Status game_actions_update(Game *game, Command *cmd);
 
 #endif
