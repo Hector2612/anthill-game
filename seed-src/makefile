@@ -27,5 +27,10 @@ game_reader.o: game_reader.c game_reader.h
 clean: 
 	rm *.o
 
-clear:
-	rm *.o anthill
+clear: clean
+	rm anthill
+
+redo: clear anthill
+
+comprobation: anthill
+	valgrind --leak-check=full --show-leak-kinds=all ./anthill anthill.dat
