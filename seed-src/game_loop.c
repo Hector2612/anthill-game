@@ -16,12 +16,43 @@
 #include "game_actions.h"
 #include "graphic_engine.h"
 
+/**
+ * @brief It initializates the loop of the game storing the necessary memory
+ * @author Profesores PPROG
+ *
+ * @param game a pointer to the game that must be initialized
+ * @param gengine a pointer of the board
+ * @param file_name a pointer to the name of the file with the data
+ * @return 0, if everything goes well or 1 if there was some mistake
+ */
 int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name);
 
+/**
+ * @brief It runs the game
+ * @author Profesores PPROG
+ *
+ * @param game a pointer to the game that must be initialized
+ * @param gengine a pointer of the board
+ */
 void game_loop_run(Game game, Graphic_engine *gengine);
 
+/**
+ * @brief It ends the game freeing all the store memory
+ * @author Profesores PPROG
+ *
+ * @param game a pointer to the game that must be initialized
+ * @param gengine a pointer of the board
+ */
 void game_loop_cleanup(Game game, Graphic_engine *gengine);
 
+/**
+ * @brief The main function, which inizializates the call stack of the others functions
+ * @author Profesores PPROG
+ *
+ * @param argc the number of arguments
+ * @param argv a pointer of the name of the data file
+ * @return 0, if everything goes well or 1 if there was some mistake
+ */
 int main(int argc, char *argv[])
 {
   Game game;
@@ -42,6 +73,7 @@ int main(int argc, char *argv[])
   return 0;
 }
 
+/* It initializates the loop of the game storing the necessary memory*/
 int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name)
 {
   if (game_create_from_file(game, file_name) == ERROR)
@@ -60,6 +92,7 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name)
   return 0;
 }
 
+/* It runs the game*/
 void game_loop_run(Game game, Graphic_engine *gengine)
 {
   Command *last_cmd;
@@ -79,6 +112,7 @@ void game_loop_run(Game game, Graphic_engine *gengine)
   }
 }
 
+/* It ends the game freeing all the store memory*/
 void game_loop_cleanup(Game game, Graphic_engine *gengine)
 {
   game_destroy(&game);

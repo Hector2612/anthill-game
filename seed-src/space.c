@@ -30,9 +30,7 @@ struct _Space
   Bool object;              /*!< Whether the space has an object or not */
 };
 
-/** space_create allocates memory for a new space
- *  and initializes its members
- */
+/* space_create allocates memory for a new space and initializes its members*/
 Space *space_create(Id id)
 {
   Space *newSpace = NULL;
@@ -59,6 +57,7 @@ Space *space_create(Id id)
   return newSpace;
 }
 
+/* It destroys a space, freeing the allocated memory*/
 Status space_destroy(Space *space)
 {
   if (!space)
@@ -71,6 +70,7 @@ Status space_destroy(Space *space)
   return OK;
 }
 
+/* It gets the id of a space*/
 Id space_get_id(Space *space)
 {
   if (!space)
@@ -80,6 +80,7 @@ Id space_get_id(Space *space)
   return space->id;
 }
 
+/* It sets the name of a space*/
 Status space_set_name(Space *space, char *name)
 {
   if (!space || !name)
@@ -94,6 +95,7 @@ Status space_set_name(Space *space, char *name)
   return OK;
 }
 
+/* It gets the name of a space*/
 const char *space_get_name(Space *space)
 {
   if (!space)
@@ -103,6 +105,7 @@ const char *space_get_name(Space *space)
   return space->name;
 }
 
+/* It sets the id of the space located at the north*/
 Status space_set_north(Space *space, Id id)
 {
   if (!space || id == NO_ID)
@@ -113,6 +116,7 @@ Status space_set_north(Space *space, Id id)
   return OK;
 }
 
+/* It gets the id of the space located at the north*/
 Id space_get_north(Space *space)
 {
   if (!space)
@@ -122,6 +126,7 @@ Id space_get_north(Space *space)
   return space->north;
 }
 
+/* It sets the id of the space located at the south*/
 Status space_set_south(Space *space, Id id)
 {
   if (!space || id == NO_ID)
@@ -132,6 +137,7 @@ Status space_set_south(Space *space, Id id)
   return OK;
 }
 
+/* It gets the id of the space located at the south*/
 Id space_get_south(Space *space)
 {
   if (!space)
@@ -141,6 +147,7 @@ Id space_get_south(Space *space)
   return space->south;
 }
 
+/* It sets the id of the space located at the east*/
 Status space_set_east(Space *space, Id id)
 {
   if (!space || id == NO_ID)
@@ -151,6 +158,7 @@ Status space_set_east(Space *space, Id id)
   return OK;
 }
 
+/* It gets the id of the space located at the east*/
 Id space_get_east(Space *space)
 {
   if (!space)
@@ -160,6 +168,7 @@ Id space_get_east(Space *space)
   return space->east;
 }
 
+/* It sets the id of the space located at the west*/
 Status space_set_west(Space *space, Id id)
 {
   if (!space || id == NO_ID)
@@ -170,6 +179,7 @@ Status space_set_west(Space *space, Id id)
   return OK;
 }
 
+/* It gets the id of the space located at the west*/
 Id space_get_west(Space *space)
 {
   if (!space)
@@ -179,6 +189,7 @@ Id space_get_west(Space *space)
   return space->west;
 }
 
+/* It sets whether the space has an object or not*/
 Status space_set_object(Space *space, Bool value)
 {
   if (!space)
@@ -189,6 +200,7 @@ Status space_set_object(Space *space, Bool value)
   return OK;
 }
 
+/* It gets whether the space has an object or not*/
 Bool space_get_object(Space *space)
 {
   if (!space)
@@ -198,6 +210,7 @@ Bool space_get_object(Space *space)
   return space->object;
 }
 
+/* It prints the space information*/
 Status space_print(Space *space)
 {
   Id idaux = NO_ID;

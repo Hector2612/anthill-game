@@ -29,9 +29,7 @@ struct _Command
   CommandCode code; /*!< Name of the command */
 };
 
-/** space_create allocates memory for a new space
- *  and initializes its members
- */
+/* It initializes the command to NULL*/
 Command *command_create()
 {
   Command *newCommand = NULL;
@@ -48,6 +46,7 @@ Command *command_create()
   return newCommand;
 }
 
+/* It free the command*/
 Status command_destroy(Command *command)
 {
   if (!command)
@@ -60,6 +59,7 @@ Status command_destroy(Command *command)
   return OK;
 }
 
+/* It sets a code to an especific command*/
 Status command_set_code(Command *command, CommandCode code)
 {
   if (!command)
@@ -72,6 +72,7 @@ Status command_set_code(Command *command, CommandCode code)
   return OK;
 }
 
+/* It gets the information of the command*/
 CommandCode command_get_code(Command *command)
 {
   if (!command)
@@ -81,6 +82,7 @@ CommandCode command_get_code(Command *command)
   return command->code;
 }
 
+/* It realize the command chosen*/
 Status command_get_user_input(Command *command)
 {
   char input[CMD_LENGHT] = "", *token = NULL;

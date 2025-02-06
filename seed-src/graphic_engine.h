@@ -33,7 +33,7 @@ void graphic_engine_destroy(Graphic_engine *ge);
 
 /**
  * @brief it represents the board game of the videogame
- * @author Profesores PPROG
+ * @author Héctor García Pérez
  *
  * @param ge the pointer with the measures
  * @param game the pointer to the game that is going to be initialized

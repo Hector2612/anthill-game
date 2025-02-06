@@ -16,12 +16,14 @@
 #define N_CMDT 2
 #define N_CMD 5
 
+/* It defines the two types of commands: short or long*/
 typedef enum
 {
     CMDS,
     CMDL
 } CommandType;
 
+/* It defines the different codes of the commands*/
 typedef enum
 {
     NO_CMD = -1,
@@ -34,7 +36,7 @@ typedef enum
 typedef struct _Command Command;
 
 /**
- * @brief it initializes the command to NULL
+ * @brief It initializes the command to NULL
  * @author Profesores PPROG
  *
  * @return the pointer to command received is empty
@@ -42,7 +44,7 @@ typedef struct _Command Command;
 Command *command_create();
 
 /**
- * @brief it free the command 
+ * @brief It free the command 
  * @author Profesores PPROG
  *
  * @param command a pointer to a struct Command that has the code information
@@ -51,7 +53,7 @@ Command *command_create();
 Status command_destroy(Command *command);
 
 /**
- * @brief it sets a code to an especific command 
+ * @brief It sets a code to an especific command 
  * @author Profesores PPROG
  *
  * @param command a pointer to the command chosen
@@ -61,7 +63,7 @@ Status command_destroy(Command *command);
 Status command_set_code(Command *command, CommandCode code);
 
 /**
- * @brief it gets the information of the command 
+ * @brief It gets the information of the command 
  * @author Profesores PPROG
  *
  * @param commando a pointer of that estructure that has a value of the information that will proceed
@@ -70,7 +72,7 @@ Status command_set_code(Command *command, CommandCode code);
 CommandCode command_get_code(Command *command);
 
 /**
- * @brief it realize the command chosen 
+ * @brief It realize the command chosen 
  * @author Profesores PPROG
  *
  * @param commando a pointer of that estructure that has a value of the information that will proceed

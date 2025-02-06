@@ -18,18 +18,47 @@
    Private functions
 */
 
+/**
+ * @brief It proccess the case in which the command is unknown
+ * @author Profesores PPROG
+ *
+ * @param game a pointer to game that we are using
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
 void game_actions_unknown(Game *game);
 
+/**
+ * @brief It proccess the case in which the command is exit
+ * @author Profesores PPROG
+ *
+ * @param game a pointer to game that we are using
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
 void game_actions_exit(Game *game);
 
+/**
+ * @brief It proccess the case in which the command is next
+ * @author Profesores PPROG
+ *
+ * @param game a pointer to game that we are using
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
 void game_actions_next(Game *game);
 
+/**
+ * @brief It proccess the case in which the command is back
+ * @author Profesores PPROG
+ *
+ * @param game a pointer to game that we are using
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
 void game_actions_back(Game *game);
 
 /**
    Game actions implementation
 */
 
+/*It is the function that will respond to our commands, doing what we say if it is possible*/
 Status game_actions_update(Game *game, Command *command)
 {
   CommandCode cmd;
@@ -67,10 +96,13 @@ Status game_actions_update(Game *game, Command *command)
    Calls implementation for each action
 */
 
+/* It proccess the case in which the command is unknown*/
 void game_actions_unknown(Game *game) {}
 
+/* It proccess the case in which the command is exit*/
 void game_actions_exit(Game *game) {}
 
+/* It proccess the case in which the command is next*/
 void game_actions_next(Game *game)
 {
   Id current_id = NO_ID;
@@ -91,6 +123,7 @@ void game_actions_next(Game *game)
   return;
 }
 
+/* It proccess the case in which the command is back*/
 void game_actions_back(Game *game)
 {
   Id current_id = NO_ID;

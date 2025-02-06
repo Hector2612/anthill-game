@@ -17,17 +17,23 @@
 
 #define MAX_SPACES 100
 
-typedef struct _Game {
-  Id player_location; /*number of the id where the player is*/
-  Id object_location; /*number of the id where the object is*/
-  Space *spaces[MAX_SPACES]; /*This struct stores all the information of a space*/
-  int n_spaces; /*number of spaces*/
-  Command *last_cmd; /*the code of the last command*/
-  Bool finished; /*TRUE or FALSE if it is finished*/
+/**
+ * @brief Game
+ *
+ * This struct stores all the information of the game.
+ */
+typedef struct _Game
+{
+  Id player_location;        /*!< Number of the id where the player is*/
+  Id object_location;        /*!< Number of the id where the object is*/
+  Space *spaces[MAX_SPACES]; /*!< This struct stores all the information of a space*/
+  int n_spaces;              /*!< Number of spaces*/
+  Command *last_cmd;         /*!< The code of the last command*/
+  Bool finished;             /*!< TRUE or FALSE if it is finished*/
 } Game;
 
 /**
- * @brief It create the game initializing the spaces to null or not having yet place the object or player
+ * @brief It creates the game initializing the spaces to null or not having yet place the object or player
  * @author Profesores PPROG
  *
  * @param game a pointer to game which is going to be created
@@ -36,17 +42,17 @@ typedef struct _Game {
 Status game_create(Game *game);
 
 /**
- * @brief uses the function game_creat and game_load_spaces which are also check and place the object and player in the first space
+ * @brief It creates the game using the file of data
  * @author Profesores PPROG
  *
  * @param game a pointer to game that we are going to use
- * @param filename a pointer to the name of the file with the data 
+ * @param filename a pointer to the name of the file with the data
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
 Status game_create_from_file(Game *game, char *filename);
 
 /**
- * @brief it frees pointer game
+ * @brief It frees pointer game
  * @author Profesores PPROG
  *
  * @param game a pointer to game that we are going to use
@@ -55,7 +61,7 @@ Status game_create_from_file(Game *game, char *filename);
 Status game_destroy(Game *game);
 
 /**
- * @brief creates new spaces for game
+ * @brief Creates new spaces for game
  * @author Profesores PPROG
  *
  * @param game a pointer to game that we are going to use
@@ -65,45 +71,45 @@ Status game_destroy(Game *game);
 Space *game_get_space(Game *game, Id id);
 
 /**
- * @brief it obtains the position of the player 
+ * @brief It obtains the position of the player
  * @author Profesores PPROG
  *
- * @param game a pointer to game that we are using 
+ * @param game a pointer to game that we are using
  * @return the id of the space where the player is
  */
 Id game_get_player_location(Game *game);
 
 /**
- * @brief it sets the position of the player at the id that correspond
+ * @brief It sets the position of the player at the id that correspond
  * @author Profesores PPROG
  *
  * @param game a pointer to game that we are using
- * @param id the id of the space where the player is going to be placed 
+ * @param id the id of the space where the player is going to be placed
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
 Status game_set_player_location(Game *game, Id id);
 
 /**
- * @brief it obtains the position of the object 
+ * @brief It obtains the position of the object
  * @author Profesores PPROG
  *
- * @param game a pointer to game that we are using 
+ * @param game a pointer to game that we are using
  * @return the id of the space where the object is
  */
 Id game_get_object_location(Game *game);
 
 /**
- * @brief it sets the position of the object at the id that correspond
+ * @brief It sets the position of the object at the id that correspond
  * @author Profesores PPROG
  *
  * @param game a pointer to game that we are using
- * @param id the id of the space where the object is going to be placed 
+ * @param id the id of the space where the object is going to be placed
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
 Status game_set_object_location(Game *game, Id id);
 
 /**
- * @brief it obtains the last instruction send
+ * @brief It obtains the last instruction send
  * @author Profesores PPROG
  *
  * @param game a pointer to game that we are using
@@ -112,7 +118,7 @@ Status game_set_object_location(Game *game, Id id);
 Command *game_get_last_command(Game *game);
 
 /**
- * @brief it inizialices the last command with pointer command
+ * @brief It inizialices the last command with pointer command
  * @author Profesores PPROG
  *
  * @param game a pointer to game that we are using
@@ -122,7 +128,7 @@ Command *game_get_last_command(Game *game);
 Status game_set_last_command(Game *game, Command *command);
 
 /**
- * @brief it informs us if the game is finished
+ * @brief It informs us if the game is finished
  * @author Profesores PPROG
  *
  * @param game a pointer to game that we are using
@@ -131,7 +137,7 @@ Status game_set_last_command(Game *game, Command *command);
 Bool game_get_finished(Game *game);
 
 /**
- * @brief it make the game finish 
+ * @brief It make the game finish
  * @author Profesores PPROG
  *
  * @param game a pointer to game that we are using
@@ -141,10 +147,10 @@ Bool game_get_finished(Game *game);
 Status game_set_finished(Game *game, Bool finished);
 
 /**
- * @brief it prints the board
+ * @brief It prints the information of the game
  * @author Profesores PPROG
  *
- * @param game a pointer to game that we are using 
+ * @param game a pointer to game that we are using
  */
 void game_print(Game *game);
 

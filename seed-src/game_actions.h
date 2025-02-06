@@ -16,7 +16,7 @@
 #include "types.h"
 
 /**
- * @brief depende on the action realized the program will do one thing or another
+ * @brief It is the function that will respond to our commands, doing what we say if it is possible
  * @author Profesores PPROG
  *
  * @param game a pointer to game that we are using
