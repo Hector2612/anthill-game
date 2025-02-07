@@ -1,36 +1,46 @@
+CC = gcc
+CFLAGS = -g -Wall -pedantic -ansi -c
+EXE = anthill
+
 all: anthill
 
 anthill: space.o graphic_engine.o game.o game_loop.o command.o game_actions.o game_reader.o
-	gcc -o anthill *.o -lscreen -L.
+	$(CC) -o $(EXE) $^ -lscreen -L.
 
 space.o: space.c space.h types.h
-	gcc -g -Wall -pedantic -ansi -c space.c
+	$(CC) $(CFLAGS) space.c
 
 graphic_engine.o: graphic_engine.c graphic_engine.h
-	gcc -g -Wall -pedantic -ansi -c graphic_engine.c
+	$(CC) $(CFLAGS) graphic_engine.c
 
 game.o: game.c game.h
-	gcc -g -Wall -pedantic -ansi -c game.c
+	$(CC) $(CFLAGS) game.c
 
 game_loop.o: game_loop.c
-	gcc -g -Wall -pedantic -ansi -c game_loop.c
+	$(CC) $(CFLAGS) game_loop.c
 
 command.o: command.c command.h
-	gcc -g -Wall -pedantic -ansi -c command.c
+	$(CC) $(CFLAGS) command.c
 
 game_actions.o: game_actions.c game_actions.h
-	gcc -g -Wall -pedantic -ansi -c game_actions.c
+	$(CC) $(CFLAGS) game_actions.c
 
 game_reader.o: game_reader.c game_reader.h
-	gcc -g -Wall -pedantic -ansi -c game_reader.c
+	$(CC) $(CFLAGS) game_reader.c
+
+object.o: object.c object.h
+	$(CC) $(CFLAGS) object.c
+
+player.o: player.c player.h
+	$(CC) $(CFLAGS) player.c
 
 clean: 
 	rm *.o
 
 clear: clean
-	rm anthill
+	rm $(EXE)
 
-redo: clear anthill
+redo: clear $(EXE)
 
-comprobation: anthill
-	valgrind --leak-check=full --show-leak-kinds=all ./anthill anthill.dat
+comprobation: $(EXE)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(EXE) $(EXE).dat
