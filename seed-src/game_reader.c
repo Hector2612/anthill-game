@@ -25,22 +25,25 @@ Status game_reader_load_spaces(Game *game, char *filename)
     Space *space = NULL;
     Status status = OK;
 
+    /* Control error*/
     if (!game || !filename)
     {
         return ERROR;
     }
 
+    /* Open the file*/
     if (!(file = fopen(filename, "r")))
     {
         return ERROR;
     }
 
+    /* Read all the file*/
     while (fgets(line, WORD_SIZE, file))
     {
         /*check each line of the file*/
         if (strncmp("#s:", line, 3) == 0) 
         {
-            /*stores the information of the line*/
+            /*stores the information of the line, in the correct field*/
             toks = strtok(line + 3, "|");
             id = atol(toks);
             toks = strtok(NULL, "|");
@@ -70,6 +73,7 @@ Status game_reader_load_spaces(Game *game, char *filename)
             space_set_south(space, south);
             space_set_west(space, west);
 
+            /* Add the new space to the game*/
             if (game_add_space(game, space) == ERROR)
             {
                 space_destroy(space);
@@ -78,11 +82,13 @@ Status game_reader_load_spaces(Game *game, char *filename)
         }
     }
 
+    /* Check if there was an error*/
     if (ferror(file))
     {
         status = ERROR;
     }
 
+    /* Close the file*/
     fclose(file);
 
     return status;
