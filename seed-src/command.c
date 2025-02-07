@@ -34,8 +34,9 @@ Command *command_create()
 {
     Command *newCommand = NULL;
 
+    /* Allocates memory for the new command*/
     newCommand = (Command *)malloc(sizeof(Command));
-    if (newCommand == NULL)
+    if (newCommand == NULL) /* Control errors*/
     {
         return NULL;
     }
@@ -49,24 +50,28 @@ Command *command_create()
 /* It free the command*/
 Status command_destroy(Command *command)
 {
+    /* Control error*/
     if (!command)
     {
         return ERROR;
     }
 
+    /* Free the allocated memory*/
     free(command);
-    command = NULL;
+
     return OK;
 }
 
 /* It sets a code to an especific command*/
 Status command_set_code(Command *command, CommandCode code)
 {
+    /* Control error*/
     if (!command)
     {
         return ERROR;
     }
 
+    /* set the code*/
     command->code = code;
 
     return OK;
@@ -75,10 +80,12 @@ Status command_set_code(Command *command, CommandCode code)
 /* It gets the information of the command*/
 CommandCode command_get_code(Command *command)
 {
+    /* Control error*/
     if (!command)
     {
         return NO_CMD;
     }
+
     return command->code;
 }
 
@@ -86,36 +93,42 @@ CommandCode command_get_code(Command *command)
 Status command_get_user_input(Command *command)
 {
     char input[CMD_LENGHT] = "", *token = NULL;
-    int i = UNKNOWN - NO_CMD + 1;
+    int i = UNKNOWN - NO_CMD + 1; /* Initializate to 2*/
     CommandCode cmd;
 
+    /* Control error*/
     if (!command)
     {
         return ERROR;
     }
 
+    /* Read the user input, and make sure that it exist*/
     if (fgets(input, CMD_LENGHT, stdin))
     {
+        /* Takes the input before ' ' and '\n*/
         token = strtok(input, " \n");
         if (!token)
         {
             return command_set_code(command, UNKNOWN);
         }
 
+        /* initializates cmd to Unknown and the loop don't stop until it changes or if we reach the max num of commands*/
         cmd = UNKNOWN;
         while (cmd == UNKNOWN && i < N_CMD)
         {
+            /* It compares with the commands from exit*/
             if (!strcasecmp(token, cmd_to_str[i][CMDS]) || !strcasecmp(token, cmd_to_str[i][CMDL]))
             {
-                cmd = i + NO_CMD;
+                cmd = i + NO_CMD; 
             }
             else
             {
                 i++;
             }
         }
+
         return command_set_code(command, cmd);
     }
     else
-        return command_set_code(command, EXIT);
+        return command_set_code(command, EXIT); /* There was an error*/
 }

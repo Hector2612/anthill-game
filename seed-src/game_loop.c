@@ -81,16 +81,22 @@ int main(int argc, char *argv[])
 /* It initializates the loop of the game storing the necessary memory*/
 int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name)
 {
+    /* Call the neccessary function to create the game with the data file, and check for possible errors*/
     if (game_create_from_file(game, file_name) == ERROR)
     {
+        /* There was an error*/
         fprintf(stderr, "Error while initializing game.\n");
+
         return 1;
     }
 
+    /* Create the game interface*/
     if ((*gengine = graphic_engine_create()) == NULL)
     {
+        /* If there was an error, it free the allocated memory*/
         fprintf(stderr, "Error while initializing graphic engine.\n");
         game_destroy(game);
+
         return 1;
     }
 
@@ -102,6 +108,7 @@ void game_loop_run(Game game, Graphic_engine *gengine)
 {
     Command *last_cmd;
 
+    /* Control error*/
     if (!gengine)
     {
         return;
@@ -109,6 +116,7 @@ void game_loop_run(Game game, Graphic_engine *gengine)
 
     last_cmd = game_get_last_command(&game);
 
+    /* While the command isn´t exit the loop continue*/
     while ((command_get_code(last_cmd) != EXIT) && (game_get_finished(&game) == FALSE))
     {
         graphic_engine_paint_game(gengine, &game);

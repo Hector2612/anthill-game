@@ -63,10 +63,12 @@ Status game_actions_update(Game *game, Command *command)
 {
     CommandCode cmd;
 
+    /* Set the last command of the game*/
     game_set_last_command(game, command);
 
     cmd = command_get_code(command);
 
+    /* Call the neccessary function depending of the cmd*/
     switch (cmd)
     {
     case UNKNOWN:
@@ -109,14 +111,20 @@ void game_actions_next(Game *game)
     Id space_id = NO_ID;
 
     space_id = game_get_player_location(game);
+
+    /* Control errors*/
     if (space_id == NO_ID)
     {
         return;
     }
 
+    /* Obtains the id of the next space*/
     current_id = space_get_south(game_get_space(game, space_id));
+
+    /* Control errors*/
     if (current_id != NO_ID)
     {
+        /* Change the id location of the player*/
         game_set_player_location(game, current_id);
     }
 
@@ -131,14 +139,19 @@ void game_actions_back(Game *game)
 
     space_id = game_get_player_location(game);
 
+    /* Control error*/
     if (NO_ID == space_id)
     {
         return;
     }
 
+    /* Get the id of the space before*/
     current_id = space_get_north(game_get_space(game, space_id));
+
+    /* Control error*/
     if (current_id != NO_ID)
     {
+        /* Change the id location of the player*/
         game_set_player_location(game, current_id);
     }
 
