@@ -1,8 +1,8 @@
 /**
- * @brief It defines the modules that allow to inicilizate the game
+ * @brief It defines the modules that allow to inicilizate the game with the data of the file
  *
  * @file game_reader.h
- * @author Hector Garcia Perez
+ * @author Héctor García Pérez
  * @version 0
  * @date 30-01-2025
  * @copyright GNU Public License
@@ -17,7 +17,7 @@
 
 /**
  * @brief It reads the file and loads the spaces into the game
- * @author Hector Garcia Perez
+ * @author Héctor García Pérez
  *
  * @param game a pointer to the game that must be initialized
  * @param filename a pointer to the name of the file with the data

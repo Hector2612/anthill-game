@@ -18,96 +18,142 @@
    Private functions
 */
 
+/**
+ * @brief It proccess the case in which the command is unknown
+ * @author Profesores PPROG
+ *
+ * @param game a pointer to game that we are using
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
 void game_actions_unknown(Game *game);
 
+/**
+ * @brief It proccess the case in which the command is exit
+ * @author Profesores PPROG
+ *
+ * @param game a pointer to game that we are using
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
 void game_actions_exit(Game *game);
 
+/**
+ * @brief It proccess the case in which the command is next
+ * @author Profesores PPROG
+ *
+ * @param game a pointer to game that we are using
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
 void game_actions_next(Game *game);
 
+/**
+ * @brief It proccess the case in which the command is back
+ * @author Profesores PPROG
+ *
+ * @param game a pointer to game that we are using
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
 void game_actions_back(Game *game);
 
 /**
    Game actions implementation
 */
 
+/*It is the function that will respond to our commands, doing what we say if it is possible*/
 Status game_actions_update(Game *game, Command *command)
 {
-  CommandCode cmd;
+    CommandCode cmd;
 
-  game_set_last_command(game, command);
+    /* Set the last command of the game*/
+    game_set_last_command(game, command);
 
-  cmd = command_get_code(command);
+    cmd = command_get_code(command);
 
-  switch (cmd)
-  {
-  case UNKNOWN:
-    game_actions_unknown(game);
-    break;
+    /* Call the neccessary function depending of the cmd*/
+    switch (cmd)
+    {
+    case UNKNOWN:
+        game_actions_unknown(game);
+        break;
 
-  case EXIT:
-    game_actions_exit(game);
-    break;
+    case EXIT:
+        game_actions_exit(game);
+        break;
 
-  case NEXT:
-    game_actions_next(game);
-    break;
+    case NEXT:
+        game_actions_next(game);
+        break;
 
-  case BACK:
-    game_actions_back(game);
-    break;
+    case BACK:
+        game_actions_back(game);
+        break;
 
-  default:
-    break;
-  }
+    default:
+        break;
+    }
 
-  return OK;
+    return OK;
 }
 
 /**
-   Calls implementation for each action
+    Calls implementation for each action
 */
 
+/* It proccess the case in which the command is unknown*/
 void game_actions_unknown(Game *game) {}
 
+/* It proccess the case in which the command is exit*/
 void game_actions_exit(Game *game) {}
 
+/* It proccess the case in which the command is next*/
 void game_actions_next(Game *game)
 {
-  Id current_id = NO_ID;
-  Id space_id = NO_ID;
+    Id current_id = NO_ID;
+    Id space_id = NO_ID;
 
-  space_id = game_get_player_location(game);
-  if (space_id == NO_ID)
-  {
+    space_id = game_get_player_location(game);
+
+    /* Control errors*/
+    if (space_id == NO_ID)
+    {
+        return;
+    }
+
+    /* Obtains the id of the next space*/
+    current_id = space_get_south(game_get_space(game, space_id));
+
+    /* Control errors*/
+    if (current_id != NO_ID)
+    {
+        /* Change the id location of the player*/
+        game_set_player_location(game, current_id);
+    }
+
     return;
-  }
-
-  current_id = space_get_south(game_get_space(game, space_id));
-  if (current_id != NO_ID)
-  {
-    game_set_player_location(game, current_id);
-  }
-
-  return;
 }
 
+/* It proccess the case in which the command is back*/
 void game_actions_back(Game *game)
 {
-  Id current_id = NO_ID;
-  Id space_id = NO_ID;
+    Id current_id = NO_ID;
+    Id space_id = NO_ID;
 
-  space_id = game_get_player_location(game);
+    space_id = game_get_player_location(game);
 
-  if (NO_ID == space_id)
-  {
+    /* Control error*/
+    if (NO_ID == space_id)
+    {
+        return;
+    }
+
+    /* Get the id of the space before*/
+    current_id = space_get_north(game_get_space(game, space_id));
+
+    /* Control error*/
+    if (current_id != NO_ID)
+    {
+        /* Change the id location of the player*/
+        game_set_player_location(game, current_id);
+    }
+
     return;
-  }
-
-  current_id = space_get_north(game_get_space(game, space_id));
-  if (current_id != NO_ID)
-  {
-    game_set_player_location(game, current_id);
-  }
-
-  return;
 }

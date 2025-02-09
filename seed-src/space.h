@@ -17,7 +17,7 @@ typedef struct _Space Space;
 
 /**
  * @brief It creates a new space, allocating memory and initializing its members
- * @author Profesores PPROG
+ * @author Jaime Luna Lavela
  *
  * @param id the identification number for the new space
  * @return a new space, initialized
@@ -140,22 +140,22 @@ Id space_get_west(Space *space);
 
 /**
  * @brief It sets whether the space has an object or not
- * @author Profesores PPROG
+ * @author Jaime Luna Lavela
  *
  * @param space a pointer to the space
- * @param value a boolean, specifying if in the space there is an object (TRUE) or not (FALSE)
+ * @param object the id of the object we want to set
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status space_set_object(Space *space, Bool value);
+Status space_set_object(Space *space, Id object);
 
 /**
  * @brief It gets whether the space has an object or not
- * @author Profesores PPROG
+ * @author Jaime Luna Lavela
  *
  * @param space a pointer to the space
- * @return a boolean, specifying if in the space there is an object (TRUE) or not (FALSE)
+ * @return the id of the space's object
  */
-Bool space_get_object(Space *space);
+Id space_get_object(Space *space);
 
 /**
  * @brief It prints the space information
