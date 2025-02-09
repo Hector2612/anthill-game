@@ -27,7 +27,7 @@ struct _Space
     Id south;                 /*!< Id of the space at the south */
     Id east;                  /*!< Id of the space at the east */
     Id west;                  /*!< Id of the space at the west */
-    Bool object;              /*!< Whether the space has an object or not */
+    Id object;                /*!< Id of the space's object*/
 };
 
 /* space_create allocates memory for a new space and initializes its members*/
@@ -53,7 +53,7 @@ Space *space_create(Id id)
     newSpace->south = NO_ID;
     newSpace->east = NO_ID;
     newSpace->west = NO_ID;
-    newSpace->object = FALSE;
+    newSpace->object = NO_ID;
 
     return newSpace;
 }
@@ -69,7 +69,7 @@ Status space_destroy(Space *space)
 
     /*Free the allocated memory*/
     free(space);
-    space = NULL;
+
     return OK;
 }
 
@@ -224,7 +224,7 @@ Id space_get_west(Space *space)
 }
 
 /* It sets whether the space has an object or not*/
-Status space_set_object(Space *space, Bool value)
+Status space_set_object(Space *space, Id object)
 {
     /* Error control*/
     if (!space)
@@ -233,13 +233,13 @@ Status space_set_object(Space *space, Bool value)
     }
 
     /* Set the object*/
-    space->object = value;
+    space->object = object;
 
     return OK;
 }
 
 /* It gets whether the space has an object or not*/
-Bool space_get_object(Space *space)
+Id space_get_object(Space *space)
 {
     /* Error control*/
     if (!space)

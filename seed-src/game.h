@@ -14,6 +14,8 @@
 #include "command.h"
 #include "space.h"
 #include "types.h"
+#include "object.h"
+#include "player.h"
 
 #define MAX_SPACES 100
 
@@ -24,8 +26,8 @@
  */
 typedef struct _Game
 {
-  Id player_location;        /*!< Number of the id where the player is*/
-  Id object_location;        /*!< Number of the id where the object is*/
+  Player *player;            /*!< Pointer to the player's objects*/
+  Object *object;            /*!< Pointer to the game's object*/
   Space *spaces[MAX_SPACES]; /*!< This struct stores all the information of a space*/
   int n_spaces;              /*!< Number of spaces*/
   Command *last_cmd;         /*!< The code of the last command*/
@@ -34,7 +36,7 @@ typedef struct _Game
 
 /**
  * @brief It creates the game initializing the spaces to null or not having yet place the object or player
- * @author Profesores PPROG
+ * @author Héctor García Pérez
  *
  * @param game a pointer to game which is going to be created
  * @return OK, if everything goes well or ERROR if there was some mistake
@@ -53,7 +55,7 @@ Status game_create_from_file(Game *game, char *filename);
 
 /**
  * @brief It frees pointer game
- * @author Profesores PPROG
+ * @author Héctor García Pérez
  *
  * @param game a pointer to game that we are going to use
  * @return OK, if everything goes well or ERROR if there was some mistake
@@ -72,7 +74,7 @@ Space *game_get_space(Game *game, Id id);
 
 /**
  * @brief It obtains the position of the player
- * @author Profesores PPROG
+ * @author Héctor García Pérez
  *
  * @param game a pointer to game that we are using
  * @return the id of the space where the player is
@@ -81,7 +83,7 @@ Id game_get_player_location(Game *game);
 
 /**
  * @brief It sets the position of the player at the id that correspond
- * @author Profesores PPROG
+ * @author Héctor García Pérez
  *
  * @param game a pointer to game that we are using
  * @param id the id of the space where the player is going to be placed
@@ -91,7 +93,7 @@ Status game_set_player_location(Game *game, Id id);
 
 /**
  * @brief It obtains the position of the object
- * @author Profesores PPROG
+ * @author Héctor García Pérez
  *
  * @param game a pointer to game that we are using
  * @return the id of the space where the object is
@@ -100,7 +102,7 @@ Id game_get_object_location(Game *game);
 
 /**
  * @brief It sets the position of the object at the id that correspond
- * @author Profesores PPROG
+ * @author Héctor García Pérez
  *
  * @param game a pointer to game that we are using
  * @param id the id of the space where the object is going to be placed
@@ -163,5 +165,25 @@ void game_print(Game *game);
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
 Status game_add_space(Game *game, Space *space);
+
+/**
+ * @brief It gets the pointer of the object
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to the struct game
+ * @return the pointer to the game object
+ */
+Object *game_get_object(Game *game);
+
+/**
+ * @brief It gets the pointer of the player
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to the struct game
+ * @return the pointer to the player
+ */
+
+Player *game_get_player(Game *player);
+
 
 #endif

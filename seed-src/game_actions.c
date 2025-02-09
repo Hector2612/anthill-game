@@ -95,7 +95,7 @@ Status game_actions_update(Game *game, Command *command)
 }
 
 /**
-   Calls implementation for each action
+    Calls implementation for each action
 */
 
 /* It proccess the case in which the command is unknown*/

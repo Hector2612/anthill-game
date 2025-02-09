@@ -37,7 +37,8 @@ Object *object_create(Id id)
     }
 
     /* Allocates memory for the new object*/
-    if (!(object = (Object *)malloc(sizeof(Object))))
+    object = (Object *)malloc(sizeof(Object));
+    if (!object)
     {
         return NULL;
     }
@@ -98,7 +99,10 @@ Status object_set_name(Object *object, char *name)
     }
 
     /* Copy the argument to the object name*/
-    strcpy(object->name, name);
+    if (!strcpy(object->name, name))
+    {
+        return ERROR;
+    }
 
     return OK;
 }
@@ -113,7 +117,7 @@ Status object_print(Object *object)
     }
 
     /* Prints the information of the object*/
-    fprintf(stdout, "Object (Id:%ld Name:%s)", object->id, object->name);
+    fprintf(stdout, "--> Object (Id: %ld; Name: %s)", object->id, object->name);
 
     return OK;
 }
