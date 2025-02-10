@@ -226,14 +226,15 @@ void game_actions_take(Game *game)
 void game_actions_drop(Game *game)
 {
     Id obj_loc, player_loc, id_object;
+    Player *player;
 
     /*control error*/
-    if (!game)
+    if (!game || !(player = game_get_player(game)))
     {
         return;
     }
 
-    if ((obj_loc = game_get_object_location(game)) != NO_ID)
+    if ((obj_loc = game_get_object_location(game)) != NO_ID || player_get_object(player) == NO_ID)
     {
         return;
     }
@@ -243,7 +244,7 @@ void game_actions_drop(Game *game)
         return;
     }
 
-    if (player_set_object(game_get_player(game), NO_ID) == ERROR)
+    if (player_set_object(player, NO_ID) == ERROR)
     {
         return;
     }

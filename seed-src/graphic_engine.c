@@ -353,7 +353,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     }
     else if (obj_loc == NO_ID && player_get_object(game_get_player(game)) != NO_ID)
     {
-        sprintf(str, "  Object location:--");
+        sprintf(str, "  Object location:%d",(int)id_act);
         screen_area_puts(ge->descript, str);
     }
 

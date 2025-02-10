@@ -183,7 +183,7 @@ Object *game_get_object(Game *game);
  * @return the pointer to the player
  */
 
-Player *game_get_player(Game *player);
+Player *game_get_player(Game *game);
 
 
 #endif
