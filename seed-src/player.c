@@ -81,7 +81,7 @@ Id player_get_id(Player *player)
 }
 
 /* It sets the name of a player*/
-Status player_set_name(Player *player, char *name)
+Status player_set_name(Player *player, const char *name)
 {
     /* Control error*/
     if (!player || !name)

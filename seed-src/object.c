@@ -90,7 +90,7 @@ const char *object_get_name(Object *object)
 }
 
 /* It sets the name of an object*/
-Status object_set_name(Object *object, char *name)
+Status object_set_name(Object *object, const char *name)
 {
     /* Control error*/
     if (!object || !name)

@@ -58,7 +58,7 @@ const char *object_get_name(Object *object);
  * @param space a pointer to the object
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status object_set_name(Object *object, char *name);
+Status object_set_name(Object *object, const char *name);
 
 /**
  * @brief It prints the information of the object

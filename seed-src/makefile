@@ -42,5 +42,8 @@ clear: clean
 
 redo: clear all
 
+run: $(EXE)
+	./$(EXE) $(EXE).dat
+
 comprobation: $(EXE)
 	valgrind --leak-check=full --show-leak-kinds=all ./$(EXE) $(EXE).dat

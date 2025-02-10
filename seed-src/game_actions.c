@@ -183,39 +183,45 @@ void game_actions_back(Game *game)
 
     return;
 }
-
+/* It proccess the case in which the command is take*/
 void game_actions_take(Game *game)
 {
     Id obj_loc, player_loc, id_object;
 
-    /*control error*/
+    /* Control error*/
     if (!game)
     {
         return;
     }
 
+    /* Gets the object location*/
     if ((obj_loc = game_get_object_location(game)) == NO_ID)
     {
         return;
     }
 
+    /* Gets the player location*/
     if ((player_loc = game_get_player_location(game)) == NO_ID)
     {
         return;
     }
 
+    /* It checks that the object location is equal to player location*/
     if (player_loc == obj_loc)
     {
+        /* It remove the object from the space*/
         if ((space_set_object(game_get_space(game, obj_loc), NO_ID)) == ERROR)
         {
             return;
         }
 
+        /* Gets the id of the object*/
         if ((id_object = object_get_id(game_get_object(game))) == NO_ID)
         {
             return;
         }
 
+        /*  Puts the object with the player*/
         if (player_set_object(game_get_player(game), id_object) == ERROR)
         {
             return;
@@ -223,37 +229,43 @@ void game_actions_take(Game *game)
     }
 }
 
+/* It proccess the case in which the command is drop*/
 void game_actions_drop(Game *game)
 {
     Id obj_loc, player_loc, id_object;
     Player *player;
 
-    /*control error*/
+    /* Control error*/
     if (!game || !(player = game_get_player(game)))
     {
         return;
     }
 
+    /* It checks that the player has the object*/
     if ((obj_loc = game_get_object_location(game)) != NO_ID || player_get_object(player) == NO_ID)
     {
         return;
     }
 
+    /* Gets the player location*/
     if ((player_loc = game_get_player_location(game)) == NO_ID)
     {
         return;
     }
 
+    /* Remove the object from the player*/
     if (player_set_object(player, NO_ID) == ERROR)
     {
         return;
     }
 
+    /* Gets the id of the object*/
     if ((id_object = object_get_id(game_get_object(game))) == NO_ID)
     {
         return;
     }
 
+    /* Sets the location of the object in the space with the player*/
     if (game_set_object_location(game, player_loc) == ERROR)
     {
         return;

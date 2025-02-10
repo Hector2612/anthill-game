@@ -49,7 +49,7 @@ Id player_get_id(Player *player);
  * @param name a string with the name to store
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status player_set_name(Player *player, char *name);
+Status player_set_name(Player *player, const char *name);
 
 /**
  * @brief It gets the name of a player

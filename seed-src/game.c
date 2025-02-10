@@ -45,10 +45,40 @@ Status game_create(Game *game)
     }
 
     /* Initializates all the fields of the struct game*/
+    
     game->n_spaces = 0;
-    game->player = player_create(5);
-    game->object = object_create(5);
-    game->last_cmd = command_create();
+
+    if (!(game->player = player_create(5)))
+    {
+        return ERROR;
+    }
+
+    if (player_set_name(game->player, "Player 1") == ERROR)
+    {
+        player_destroy(game->player);
+        return ERROR;
+    }
+
+    if (!(game->object = object_create(5)))
+    {
+        player_destroy(game->player);
+        return ERROR;
+    }
+
+    if (object_set_name(game->object, "Object 1") == ERROR)
+    {
+        player_destroy(game->player);
+        object_destroy(game->object);
+        return ERROR;
+    }
+
+    if (!(game->last_cmd = command_create()))
+    {
+        player_destroy(game->player);
+        object_destroy(game->object);
+        return ERROR;
+    }
+
     game->finished = FALSE;
 
     return OK;
@@ -72,6 +102,7 @@ Status game_create_from_file(Game *game, char *filename)
     /* Call the function which read the file an makes a control errors*/
     if (game_reader_load_spaces(game, filename) == ERROR)
     {
+        game_destroy(game);
         return ERROR;
     }
 
