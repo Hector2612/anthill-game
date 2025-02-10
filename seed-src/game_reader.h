@@ -23,6 +23,6 @@
  * @param filename a pointer to the name of the file with the data
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status game_reader_load_spaces(Game *game, char *filename);
+Status game_reader_load_spaces(Game *game, const char *filename);
 
 #endif

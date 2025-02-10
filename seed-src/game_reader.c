@@ -15,7 +15,7 @@
 #include <string.h>
 
 /*game_reader_load_spaces reads the file and loads the spaces into the game*/
-Status game_reader_load_spaces(Game *game, char *filename)
+Status game_reader_load_spaces(Game *game, const char *filename)
 {
     FILE *file = NULL;
     char line[WORD_SIZE] = "";
