@@ -55,6 +55,24 @@ void game_actions_next(Game *game);
 void game_actions_back(Game *game);
 
 /**
+ * @brief It proccess the case in which the command is take
+ * @author Jaime Luna Lavela
+ *
+ * @param game a pointer to game that we are using
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+void game_actions_take(Game *game);
+
+/**
+ * @brief It proccess the case in which the command is drop
+ * @author Jaime Luna Lavela
+ *
+ * @param game a pointer to game that we are using
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+void game_actions_drop(Game *game);
+
+/**
    Game actions implementation
 */
 
@@ -85,6 +103,14 @@ Status game_actions_update(Game *game, Command *command)
 
     case BACK:
         game_actions_back(game);
+        break;
+
+    case TAKE:
+        game_actions_take(game);
+        break;
+
+    case DROP:
+        game_actions_drop(game);
         break;
 
     default:
@@ -156,4 +182,80 @@ void game_actions_back(Game *game)
     }
 
     return;
+}
+
+void game_actions_take(Game *game)
+{
+    Id obj_loc, player_loc, id_object;
+
+    /*control error*/
+    if (!game)
+    {
+        return;
+    }
+
+    if ((obj_loc = game_get_object_location(game)) == NO_ID)
+    {
+        return;
+    }
+
+    if ((player_loc = game_get_player_location(game)) == NO_ID)
+    {
+        return;
+    }
+
+    if (player_loc == obj_loc)
+    {
+        if ((space_set_object(game_get_space(game, obj_loc), NO_ID)) == ERROR)
+        {
+            return;
+        }
+
+        if ((id_object = object_get_id(game_get_object(game))) == NO_ID)
+        {
+            return;
+        }
+
+        if (player_set_object(game_get_player(game), id_object) == ERROR)
+        {
+            return;
+        }
+    }
+}
+
+void game_actions_drop(Game *game)
+{
+    Id obj_loc, player_loc, id_object;
+
+    /*control error*/
+    if (!game)
+    {
+        return;
+    }
+
+    if ((obj_loc = game_get_object_location(game)) != NO_ID)
+    {
+        return;
+    }
+
+    if ((player_loc = game_get_player_location(game)) == NO_ID)
+    {
+        return;
+    }
+
+    if (player_set_object(game_get_player(game), NO_ID) == ERROR)
+    {
+        return;
+    }
+
+    if ((id_object = object_get_id(game_get_object(game))) == NO_ID)
+    {
+        return;
+    }
+
+    if (game_set_object_location(game, player_loc) == ERROR)
+    {
+        return;
+    }
+    
 }

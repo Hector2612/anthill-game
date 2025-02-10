@@ -14,7 +14,7 @@
 #include "types.h"
 
 #define N_CMDT 2
-#define N_CMD 5
+#define N_CMD 7
 
 /* It defines the two types of commands: short or long*/
 typedef enum
@@ -30,7 +30,9 @@ typedef enum
     UNKNOWN,
     EXIT,
     NEXT,
-    BACK
+    BACK,
+    TAKE,
+    DROP
 } CommandCode;
 
 typedef struct _Command Command;
