@@ -16,14 +16,19 @@
 #define N_CMDT 2
 #define N_CMD 7
 
-/* It defines the two types of commands: short or long*/
+
+/**
+ * @brief It defines the two types of commands: short or long.
+ */
 typedef enum
 {
     CMDS,
     CMDL
 } CommandType;
 
-/* It defines the different codes of the commands*/
+/**
+ * @brief It defines the different codes of the commands.
+ */
 typedef enum
 {
     NO_CMD = -1,
