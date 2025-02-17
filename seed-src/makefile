@@ -13,25 +13,25 @@ space.o: space.c space.h types.h
 graphic_engine.o: graphic_engine.c graphic_engine.h
 	$(CC) $(CFLAGS) -c graphic_engine.c
 
-game.o: game.c game.h
+game.o: game.c game.h command.h types.h space.h object.h player.h game_reader.h
 	$(CC) $(CFLAGS) -c game.c
 
-game_loop.o: game_loop.c
+game_loop.o: game_loop.c command.h types.h game.h space.h object.h player.h game_actions.h graphic_engine.h
 	$(CC) $(CFLAGS) -c game_loop.c
 
-command.o: command.c command.h
+command.o: command.c command.h types.h
 	$(CC) $(CFLAGS) -c command.c
 
-game_actions.o: game_actions.c game_actions.h
+game_actions.o: game_actions.c game_actions.h command.h types.h game.h space.h object.h player.h
 	$(CC) $(CFLAGS) -c game_actions.c
 
-game_reader.o: game_reader.c game_reader.h
+game_reader.o: game_reader.c game_reader.h types.h space.h game.h command.h object.h player.h
 	$(CC) $(CFLAGS)  -c game_reader.c
 
-object.o: object.c object.h
+object.o: object.c object.h types.h
 	$(CC) $(CFLAGS) -c object.c
 
-player.o: player.c player.h
+player.o: player.c player.h types.h
 	$(CC) $(CFLAGS) -c player.c
 
 clean: 
