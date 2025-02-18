@@ -185,5 +185,4 @@ Object *game_get_object(Game *game);
 
 Player *game_get_player(Game *game);
 
-
 #endif

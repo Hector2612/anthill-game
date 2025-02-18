@@ -15,6 +15,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+
 /**
     Private functions
 */
@@ -45,7 +47,7 @@ Status game_create(Game *game)
     }
 
     /* Initializates all the fields of the struct game*/
-    
+
     game->n_spaces = 0;
 
     if (!(game->player = player_create(5)))
