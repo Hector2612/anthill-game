@@ -139,7 +139,7 @@ void test2_set_add_id()
 
     PRINT_TEST_RESULT(set_add_id(set, i) == ERROR);
     set_destroy(set);
-} /* Set lleno*/
+}
 
 void test3_set_add_id()
 {
@@ -150,14 +150,14 @@ void test3_set_add_id()
     PRINT_TEST_RESULT(set_add_id(set, NO_ID) == ERROR);
 
     set_destroy(set);
-} /* le paso NO_ID*/
+}
 
 void test4_set_add_id()
 {
     Set *set = NULL;
 
     PRINT_TEST_RESULT(set_add_id(set, 5) == ERROR);
-} /* puntero null*/
+}
 
 void test5_set_add_id()
 {
@@ -169,7 +169,7 @@ void test5_set_add_id()
 
     PRINT_TEST_RESULT(set_add_id(set, 5) == ERROR);
     set_destroy(set);
-} /* id ya está en el set*/
+}
 
 void test6_set_add_id()
 {
@@ -203,14 +203,14 @@ void test2_set_del_id()
 
     PRINT_TEST_RESULT(set_del_id(set, 5) == ERROR);
     set_destroy(set);
-} /* si id no en set*/
+}
 
 void test3_set_del_id()
 {
     Set *set = NULL;
 
     PRINT_TEST_RESULT(set_del_id(set, 5) == ERROR);
-} /* puntero null*/
+}
 
 void test4_set_del_id()
 {
@@ -220,7 +220,7 @@ void test4_set_del_id()
 
     PRINT_TEST_RESULT(set_del_id(set, NO_ID) == ERROR);
     set_destroy(set);
-} /* id es NO_ID*/
+}
 
 void test5_set_del_id()
 {
@@ -247,14 +247,15 @@ void test1_set_find_id()
 
     PRINT_TEST_RESULT(((set_find_id(set, 5) == 0) && (set_find_id(set, 6) == 1) && (set_find_id(set, 7) == 2)));
     set_destroy(set);
-} /* comprueba que encuentra bien con un id*/
+}
 
 void test2_set_find_id()
 {
     Set *set = NULL;
 
     PRINT_TEST_RESULT((set_find_id(set, 5) == -1));
-} /* puntero NULL*/
+}
+
 void test3_set_find_id()
 {
     Set *set = NULL;
@@ -264,7 +265,8 @@ void test3_set_find_id()
 
     PRINT_TEST_RESULT((set_find_id(set, NO_ID)) == -1);
     set_destroy(set);
-} /* No_id*/
+}
+
 void test4_set_find_id()
 {
     Set *set = NULL;
@@ -274,7 +276,7 @@ void test4_set_find_id()
 
     PRINT_TEST_RESULT((set_find_id(set, 6)) == -1);
     set_destroy(set);
-} /* no esta en el array*/
+}
 
 void test1_set_get_number_ids()
 {
@@ -288,7 +290,7 @@ void test1_set_get_number_ids()
 
     PRINT_TEST_RESULT(set_get_number_ids(set) == 2);
     set_destroy(set);
-} /* cuenta bien*/
+}
 
 void test2_set_get_number_ids()
 {
@@ -296,4 +298,4 @@ void test2_set_get_number_ids()
 
     PRINT_TEST_RESULT(set_get_number_ids(set) == -1);
 
-} /* puntero null*/
+}
