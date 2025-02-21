@@ -20,8 +20,8 @@
  */
 struct _Set
 {
-    int n_ids;         /*!< The number of the ids in the set*/
-    Id ids[MAX_IDS];   /*!< The array of the ids in the set*/
+    int n_ids;       /*!< The number of the ids in the set*/
+    Id ids[MAX_IDS]; /*!< The array of the ids in the set*/
 };
 
 /* It creates a new set, allocating memory*/
@@ -67,7 +67,7 @@ Status set_destroy(Set *set)
 Status set_add_id(Set *set, Id id)
 {
     /* Control error*/
-    if (!set || id == NO_ID || set->n_ids >= MAX_IDS)
+    if (!set || id == NO_ID || set->n_ids >= MAX_IDS || set_find_id(set, id) >= 0)
     {
         return ERROR;
     }
@@ -84,7 +84,7 @@ Status set_add_id(Set *set, Id id)
 /* It deletes an id of the set*/
 Status set_del_id(Set *set, Id id)
 {
-    int i, position_in_array = -1;
+    int position_in_array = -1;
 
     /* Control error*/
     if (!set || id == NO_ID)
@@ -93,13 +93,7 @@ Status set_del_id(Set *set, Id id)
     }
 
     /* Find the pass id in the array*/
-    for (i = 0; i < set->n_ids; i++)
-    {
-        if (set->ids[i] == id)
-        {
-            position_in_array = i;
-        }
-    }
+    position_in_array = set_find_id(set, id);
 
     /* If the pass id isn't in the set*/
     if (position_in_array == -1)
@@ -127,7 +121,6 @@ Status set_print(Set *set)
         return ERROR;
     }
 
-    
     fprintf(stdout, "Set: \n");
 
     /* Prints all the ids of the set*/
@@ -137,4 +130,39 @@ Status set_print(Set *set)
     }
 
     return OK;
+}
+
+/* It finds the position of an id in the set*/
+int set_find_id(Set *set, Id id)
+{
+    int i, position_in_array = -1;
+
+    /* Control error*/
+    if (id == NO_ID || !set)
+    {
+        return -1;
+    }
+
+    /* Find the position of the id in the array*/
+    for (i = 0; i < set->n_ids; i++)
+    {
+        if (set->ids[i] == id)
+        {
+            position_in_array = i;
+        }
+    }
+
+    return position_in_array;
+}
+
+/* It gets the number of ids of the set*/
+int set_get_number_ids(Set *set)
+{
+    /* Control error*/
+    if (!set)
+    {
+        return -1;
+    }
+
+    return set->n_ids;
 }
