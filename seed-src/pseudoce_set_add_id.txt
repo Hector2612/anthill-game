@@ -1,0 +1,16 @@
+Start function set_add_id(set, id)
+    // Control error
+    If set is null or id is NO_ID or set has reached MAX_IDS or id already exists in set Then
+        Return ERROR
+    EndIf
+
+    // Add the id to the set
+    set.ids[set.n_ids] = id
+
+    // Increments the number of ids
+    set.n_ids = set.n_ids + 1
+
+    // All went ok
+    Return OK
+
+End function

@@ -1,0 +1,27 @@
+Start function set_del_id(set, id)
+
+    // Control error
+    if set is null or id is NO_ID Then
+        return ERROR
+    EndIf
+
+    // Call the function to find the position in the array
+    position_in_set = set_find_id(set, id)
+
+    // If the id is not found return ERROR
+    If position_in_set is -1 Then
+        return ERROR
+    EndIf
+
+    // puts the last id of the set, in the position of the id we want to delete
+    set.ids[position_in_set] = set.ids[set.n_ids - 1]
+
+    // sets the id in last position to NO_ID
+    set.ids[set.n_ids - 1] = NO_ID
+
+    // reduces the number of ids
+    set.n_ids = set.n_ids -1
+
+    Return OK
+
+End function

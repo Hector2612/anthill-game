@@ -1,3 +1,13 @@
+/**
+ * @brief It tests set module
+ *
+ * @file set_test.c
+ * @author Héctor García Pérez
+ * @version 0.0
+ * @date 21-02-2025
+ * @copyright GNU Public License
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -6,8 +16,16 @@
 #include "types.h"
 #include "test.h"
 
-#define MAX_TESTS 17
+#define MAX_TESTS 19
 
+/** @brief Main function for SET unit tests.
+*
+* You may execute ALL or a SINGLE test
+*   1.- No parameter -> ALL test are executed
+*   2.- A number means a particular test (the one identified by that number)
+*       is executed
+*
+*/
 int main(int argc, char **argv)
 {
     int test = 0;
@@ -44,24 +62,28 @@ int main(int argc, char **argv)
     if (all || test == 7)
         test5_set_add_id();
     if (all || test == 8)
-        test1_set_del_id();
+        test6_set_add_id();
     if (all || test == 9)
-        test2_set_del_id();
+        test1_set_del_id();
     if (all || test == 10)
-        test3_set_del_id();
+        test2_set_del_id();
     if (all || test == 11)
-        test4_set_del_id();
+        test3_set_del_id();
     if (all || test == 12)
-        test1_set_find_id();
+        test4_set_del_id();
     if (all || test == 13)
-        test2_set_find_id();
+        test5_set_del_id();
     if (all || test == 14)
-        test3_set_find_id();
+        test1_set_find_id();
     if (all || test == 15)
-        test4_set_find_id();
+        test2_set_find_id();
     if (all || test == 16)
-        test1_set_get_number_ids();
+        test3_set_find_id();
     if (all || test == 17)
+        test4_set_find_id();
+    if (all || test == 18)
+        test1_set_get_number_ids();
+    if (all || test == 19)
         test2_set_get_number_ids();
 
     PRINT_PASSED_PERCENTAGE;
@@ -99,9 +121,7 @@ void test1_set_add_id()
 
     set = set_create();
 
-    set_add_id(set, 5);
-
-    PRINT_TEST_RESULT((set_find_id(set, 5) == 0) && (set_get_number_ids(set) == 1));
+    PRINT_TEST_RESULT(set_add_id(set, 5) == OK);
     set_destroy(set);
 }
 
@@ -131,12 +151,14 @@ void test3_set_add_id()
 
     set_destroy(set);
 } /* le paso NO_ID*/
+
 void test4_set_add_id()
 {
     Set *set = NULL;
 
     PRINT_TEST_RESULT(set_add_id(set, 5) == ERROR);
 } /* puntero null*/
+
 void test5_set_add_id()
 {
     Set *set = NULL;
@@ -149,6 +171,17 @@ void test5_set_add_id()
     set_destroy(set);
 } /* id ya está en el set*/
 
+void test6_set_add_id()
+{
+    Set *set = NULL;
+
+    set = set_create();
+    set_add_id(set, 5);
+
+    PRINT_TEST_RESULT((set_find_id(set, 5) == 0) && set_get_number_ids(set) == 1);
+    set_destroy(set);
+}
+
 void test1_set_del_id()
 {
     Set *set = NULL;
@@ -157,11 +190,10 @@ void test1_set_del_id()
 
     set_add_id(set, 5);
     set_add_id(set, 6);
-    set_del_id(set, 5);
 
-    PRINT_TEST_RESULT(set_find_id(set, 5) == -1 && set_get_number_ids(set) == 1);
+    PRINT_TEST_RESULT(set_del_id(set, 5) == OK);
     set_destroy(set);
-} /* todo bien*/
+}
 
 void test2_set_del_id()
 {
@@ -189,6 +221,20 @@ void test4_set_del_id()
     PRINT_TEST_RESULT(set_del_id(set, NO_ID) == ERROR);
     set_destroy(set);
 } /* id es NO_ID*/
+
+void test5_set_del_id()
+{
+    Set *set = NULL;
+
+    set = set_create();
+
+    set_add_id(set, 5);
+    set_add_id(set, 6);
+    set_del_id(set, 5);
+
+    PRINT_TEST_RESULT((set_find_id(set, 5) == -1) && set_get_number_ids(set) == 1);
+    set_destroy(set);
+}
 
 void test1_set_find_id()
 {
