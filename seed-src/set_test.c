@@ -88,7 +88,7 @@ int main(int argc, char **argv)
 
     PRINT_PASSED_PERCENTAGE;
 
-    return 1;
+    return EXIT_SUCCESS;
 }
 
 void test1_set_create()
@@ -178,7 +178,7 @@ void test6_set_add_id()
     set = set_create();
     set_add_id(set, 5);
 
-    PRINT_TEST_RESULT((set_find_id(set, 5) == 0) && set_get_number_ids(set) == 1);
+    PRINT_TEST_RESULT((set_find_id(set, 5) == TRUE) && set_get_number_ids(set) == 1);
     set_destroy(set);
 }
 
@@ -232,7 +232,7 @@ void test5_set_del_id()
     set_add_id(set, 6);
     set_del_id(set, 5);
 
-    PRINT_TEST_RESULT((set_find_id(set, 5) == -1) && set_get_number_ids(set) == 1);
+    PRINT_TEST_RESULT((set_find_id(set, 5) == FALSE) && (set_get_number_ids(set) == 1));
     set_destroy(set);
 }
 
@@ -245,7 +245,7 @@ void test1_set_find_id()
     set_add_id(set, 6);
     set_add_id(set, 7);
 
-    PRINT_TEST_RESULT(((set_find_id(set, 5) == 0) && (set_find_id(set, 6) == 1) && (set_find_id(set, 7) == 2)));
+    PRINT_TEST_RESULT(((set_find_id(set, 5) == TRUE) && (set_find_id(set, 6) == TRUE) && (set_find_id(set, 7) == TRUE)));
     set_destroy(set);
 }
 
@@ -253,7 +253,7 @@ void test2_set_find_id()
 {
     Set *set = NULL;
 
-    PRINT_TEST_RESULT((set_find_id(set, 5) == -1));
+    PRINT_TEST_RESULT((set_find_id(set, 5) == FALSE));
 }
 
 void test3_set_find_id()
@@ -263,7 +263,7 @@ void test3_set_find_id()
     set = set_create();
     set_add_id(set, 5);
 
-    PRINT_TEST_RESULT((set_find_id(set, NO_ID)) == -1);
+    PRINT_TEST_RESULT((set_find_id(set, NO_ID)) == FALSE);
     set_destroy(set);
 }
 
@@ -274,7 +274,7 @@ void test4_set_find_id()
     set = set_create();
     set_add_id(set, 5);
 
-    PRINT_TEST_RESULT((set_find_id(set, 6)) == -1);
+    PRINT_TEST_RESULT((set_find_id(set, 6)) == FALSE);
     set_destroy(set);
 }
 

@@ -24,6 +24,24 @@ struct _Set
     Id ids[MAX_IDS]; /*!< The array of the ids in the set*/
 };
 
+/**
+ * Private functions
+ */
+
+/**
+ * @brief It finds if an id is in the set, and return its position in the array
+ * @author Héctor García Pérez
+ *
+ * @param set a pointer to the set we want to print
+ * @param id the id we want to find in the set
+ * @return the position of the id in the array, it returns -1 if it isn't in the array or if there is an error
+ */
+int set_find_id_at(Set *set, Id id);
+
+/**
+ * Implementation of public functions
+ */
+
 /* It creates a new set, allocating memory*/
 Set *set_create()
 {
@@ -67,7 +85,7 @@ Status set_destroy(Set *set)
 Status set_add_id(Set *set, Id id)
 {
     /* Control error*/
-    if (!set || id == NO_ID || set->n_ids >= MAX_IDS || set_find_id(set, id) >= 0)
+    if (!set || id == NO_ID || set->n_ids >= MAX_IDS || set_find_id(set, id) == TRUE)
     {
         return ERROR;
     }
@@ -93,7 +111,7 @@ Status set_del_id(Set *set, Id id)
     }
 
     /* Find the pass id in the array*/
-    position_in_array = set_find_id(set, id);
+    position_in_array = set_find_id_at(set, id);
 
     /* If the pass id isn't in the set*/
     if (position_in_array == -1)
@@ -132,8 +150,44 @@ Status set_print(Set *set)
     return OK;
 }
 
-/* It finds the position of an id in the set*/
-int set_find_id(Set *set, Id id)
+/* It finds if an id is in the set*/
+Bool set_find_id(Set *set, Id id)
+{
+    /* Control error*/
+    if (id == NO_ID || !set)
+    {
+        return FALSE;
+    }
+
+    /* It returns true or false depending if the array is in the set*/
+    if (set_find_id_at(set, id) >= 0)
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+}
+
+/* It gets the number of ids of the set*/
+int set_get_number_ids(Set *set)
+{
+    /* Control error*/
+    if (!set)
+    {
+        return -1;
+    }
+
+    return set->n_ids;
+}
+
+/**
+ * Implementation of private functions
+ */
+
+/* It finds if an id is in the set, and return its position in the array*/
+int set_find_id_at(Set *set, Id id)
 {
     int i, position_in_array = -1;
 
@@ -153,16 +207,4 @@ int set_find_id(Set *set, Id id)
     }
 
     return position_in_array;
-}
-
-/* It gets the number of ids of the set*/
-int set_get_number_ids(Set *set)
-{
-    /* Control error*/
-    if (!set)
-    {
-        return -1;
-    }
-
-    return set->n_ids;
 }

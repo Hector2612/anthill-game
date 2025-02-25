@@ -1,0 +1,22 @@
+./set_test
+Running all test for module Space:
+[33mset_test.c[0m line 103 [36mtest1_set_create[0m: [32mPASS[0m
+[33mset_test.c[0m line 114 [36mtest2_set_create[0m: [32mPASS[0m
+[33mset_test.c[0m line 124 [36mtest1_set_add_id[0m: [32mPASS[0m
+[33mset_test.c[0m line 140 [36mtest2_set_add_id[0m: [32mPASS[0m
+[33mset_test.c[0m line 150 [36mtest3_set_add_id[0m: [32mPASS[0m
+[33mset_test.c[0m line 159 [36mtest4_set_add_id[0m: [32mPASS[0m
+[33mset_test.c[0m line 170 [36mtest5_set_add_id[0m: [32mPASS[0m
+[33mset_test.c[0m line 181 [36mtest6_set_add_id[0m: [32mPASS[0m
+[33mset_test.c[0m line 194 [36mtest1_set_del_id[0m: [32mPASS[0m
+[33mset_test.c[0m line 204 [36mtest2_set_del_id[0m: [32mPASS[0m
+[33mset_test.c[0m line 212 [36mtest3_set_del_id[0m: [32mPASS[0m
+[33mset_test.c[0m line 221 [36mtest4_set_del_id[0m: [32mPASS[0m
+[33mset_test.c[0m line 235 [36mtest5_set_del_id[0m: [32mPASS[0m
+[33mset_test.c[0m line 248 [36mtest1_set_find_id[0m: [32mPASS[0m
+[33mset_test.c[0m line 256 [36mtest2_set_find_id[0m: [32mPASS[0m
+[33mset_test.c[0m line 266 [36mtest3_set_find_id[0m: [32mPASS[0m
+[33mset_test.c[0m line 277 [36mtest4_set_find_id[0m: [32mPASS[0m
+[33mset_test.c[0m line 291 [36mtest1_set_get_number_ids[0m: [32mPASS[0m
+[33mset_test.c[0m line 299 [36mtest2_set_get_number_ids[0m: [32mPASS[0m
+Tests passed 100%

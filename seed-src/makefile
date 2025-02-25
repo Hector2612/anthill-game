@@ -1,6 +1,7 @@
 CC = gcc
 CFLAGS = -g -Wall -pedantic -ansi
 EXE = anthill
+TESTS = set_test space_test
 
 all: anthill
 
@@ -50,3 +51,29 @@ run: $(EXE)
 
 comprobation: $(EXE)
 	valgrind --leak-check=full --show-leak-kinds=all ./$(EXE) $(EXE).dat
+
+
+#######################################################
+#                      TEST                           #
+#######################################################
+
+set_test: set_test.o set.o
+	$(CC) -o set_test $^
+
+set_test.o: set_test.c set.h types.h set_test.h test.h
+	$(CC) $(CFLAGS) -c $<
+
+run_set_test: set_test
+	./$<
+
+space_test: space_test.o space.o
+	$(CC) -o space_test $^
+
+space_test.o: space_test.c space.h types.h space_test.h test.h
+	$(CC) $(CFLAGS) -c $<
+
+run_space_test: space_test
+	./$<
+
+clear_test:
+	rm -f $(TESTS)

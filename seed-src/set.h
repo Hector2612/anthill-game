@@ -65,14 +65,14 @@ Status set_del_id(Set *set, Id id);
 Status set_print(Set *set);
 
 /**
- * @brief It finds if an id is in the set, and return its position
+ * @brief It finds if an id is in the set
  * @author Héctor García Pérez
  *
  * @param set a pointer to the set we want to print
  * @param id the id we want to find in the set
  * @return the position of the id in the array, it returns -1 if it isn't in the array or if there is an error
  */
-int set_find_id(Set *set, Id id);
+Bool set_find_id(Set *set, Id id);
 
 /**
  * @brief It gets the number of ids of the set

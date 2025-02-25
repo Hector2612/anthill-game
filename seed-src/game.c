@@ -15,7 +15,20 @@
 #include <stdlib.h>
 #include <string.h>
 
-
+/**
+ * @brief Game
+ *
+ * This struct stores all the information of the game.
+ */
+struct _Game
+{
+    Player *player;            /*!< Pointer to the player's objects*/
+    Object *object;            /*!< Pointer to the game's object*/
+    Space *spaces[MAX_SPACES]; /*!< This struct stores all the information of a space*/
+    int n_spaces;              /*!< Number of spaces*/
+    Command *last_cmd;         /*!< The code of the last command*/
+    Bool finished;             /*!< TRUE or FALSE if it is finished*/
+};
 
 /**
     Private functions
@@ -36,58 +49,72 @@ Id game_get_space_id_at(Game *game, int position);
 */
 
 /* It creates the game initializing the spaces to null or not having yet place the object or player*/
-Status game_create(Game *game)
+Status game_create(Game **game)
 {
     int i;
+
+    if (!game)
+    {
+        return ERROR;
+    }
+
+    if (!((*game) = (Game *)malloc(sizeof(Game))))
+    {
+        return ERROR;
+    }
 
     /* Initializates all the spaces to Null*/
     for (i = 0; i < MAX_SPACES; i++)
     {
-        game->spaces[i] = NULL;
+        (*game)->spaces[i] = NULL;
     }
 
     /* Initializates all the fields of the struct game*/
 
-    game->n_spaces = 0;
+    (*game)->n_spaces = 0;
 
-    if (!(game->player = player_create(5)))
+    if (!((*game)->player = player_create(5)))
     {
         return ERROR;
     }
 
-    if (player_set_name(game->player, "Player 1") == ERROR)
+    if (player_set_name((*game)->player, "Player 1") == ERROR)
     {
-        player_destroy(game->player);
+        free(*game);
+        player_destroy((*game)->player);
         return ERROR;
     }
 
-    if (!(game->object = object_create(5)))
+    if (!((*game)->object = object_create(5)))
     {
-        player_destroy(game->player);
+        free(*game);
+        player_destroy((*game)->player);
         return ERROR;
     }
 
-    if (object_set_name(game->object, "Object 1") == ERROR)
+    if (object_set_name((*game)->object, "Object 1") == ERROR)
     {
-        player_destroy(game->player);
-        object_destroy(game->object);
+        free(*game);
+        player_destroy((*game)->player);
+        object_destroy((*game)->object);
         return ERROR;
     }
 
-    if (!(game->last_cmd = command_create()))
+    if (!((*game)->last_cmd = command_create()))
     {
-        player_destroy(game->player);
-        object_destroy(game->object);
+        free(*game);
+        player_destroy((*game)->player);
+        object_destroy((*game)->object);
         return ERROR;
     }
 
-    game->finished = FALSE;
+    (*game)->finished = FALSE;
 
     return OK;
 }
 
 /* It creates the game using the file of data*/
-Status game_create_from_file(Game *game, char *filename)
+Status game_create_from_file(Game **game, char *filename)
 {
     /* Control error*/
     if (!game || !filename)
@@ -102,15 +129,15 @@ Status game_create_from_file(Game *game, char *filename)
     }
 
     /* Call the function which read the file an makes a control errors*/
-    if (game_reader_load_spaces(game, filename) == ERROR)
+    if (game_reader_load_spaces(*game, filename) == ERROR)
     {
-        game_destroy(game);
+        game_destroy(*game);
         return ERROR;
     }
 
     /* The player and the object are located in the first space */
-    game_set_player_location(game, game_get_space_id_at(game, 0));
-    game_set_object_location(game, game_get_space_id_at(game, 0));
+    game_set_player_location(*game, game_get_space_id_at(*game, 0));
+    game_set_object_location(*game, game_get_space_id_at(*game, 0));
 
     return OK;
 }
@@ -119,21 +146,25 @@ Status game_create_from_file(Game *game, char *filename)
 Status game_destroy(Game *game)
 {
     int i = 0;
-
-    /* Destroy all the spaces*/
-    for (i = 0; i < game->n_spaces; i++)
+    if (game)
     {
-        space_destroy(game->spaces[i]);
+        /* Destroy all the spaces*/
+        for (i = 0; i < game->n_spaces; i++)
+        {
+            space_destroy(game->spaces[i]);
+        }
+
+        /* Destroy the commands*/
+        command_destroy(game->last_cmd);
+
+        /* Destroy the object*/
+        object_destroy(game->object);
+
+        /* Destroy the player*/
+        player_destroy(game->player);
+
+        free(game);
     }
-
-    /* Destroy the commands*/
-    command_destroy(game->last_cmd);
-
-    /* Destroy the object*/
-    object_destroy(game->object);
-
-    /* Destroy the player*/
-    player_destroy(game->player);
 
     return OK;
 }
