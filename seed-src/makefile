@@ -37,6 +37,9 @@ player.o: player.c player.h types.h
 set.o: set.c set.h types.h
 	$(CC) $(CFLAGS) -c set.c
 
+character.o: character.c character.h types.h
+	$(CC) $(CFLAGS) -c character.c
+
 clean: 
 	rm -f *.o
 
