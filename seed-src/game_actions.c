@@ -259,12 +259,6 @@ void game_actions_drop(Game *game)
         return;
     }
 
-    /* Gets the id of the object*/
-    if ((id_object = object_get_id(game_get_object(game))) == NO_ID)
-    {
-        return;
-    }
-
     /* Sets the location of the object in the space with the player*/
     if (game_set_object_location(game, player_loc) == ERROR)
     {
