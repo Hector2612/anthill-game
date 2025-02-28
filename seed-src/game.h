@@ -16,6 +16,7 @@
 #include "types.h"
 #include "object.h"
 #include "player.h"
+#include "character.h"
 
 #define MAX_SPACES 100
 #define MAX_OBJECTS 20
@@ -97,8 +98,26 @@ Status game_set_player_location(Game *game, Id id);
  * @param game a pointer to the struct game
  * @return the pointer to the player
  */
-
  Player *game_get_player(Game *game);
+
+/**
+ * @brief It gets the pointer of the character with the pass id
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to the struct game
+ * @param character id of the character
+ * @return the pointer to the character with the pass id
+ */
+Character *game_get_character(Game *game, Id character);
+
+/**
+ * @brief It gets the array of the ids of all the characters in the game
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to the struct game
+ * @return the pointer to the array of ids
+ */
+Id *game_get_all_characters(Game *game);
 
 /**
  * @brief It obtains the position of the object
@@ -149,6 +168,15 @@ Object *game_get_object_with_id(Game *game, Id object);
  * @return the pointer to the allocated array
  */
 Id *game_get_all_objects(Game *game);
+
+/**
+ * @brief It gets the number of objects in the game
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to the struct game
+ * @return the number of objects or -1 if there was an error
+ */
+int game_get_n_objects(Game *game);
 
 /**
  * @brief It adds the new processed object to the game

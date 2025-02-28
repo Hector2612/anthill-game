@@ -22,13 +22,15 @@
  */
 struct _Game
 {
-    Player *player;               /*!< Pointer to the player's objects*/
-    Object *objects[MAX_OBJECTS]; /*!< Pointer to the pointers of the game's objects*/
-    int n_objects;                /*!< Number of objects*/
-    Space *spaces[MAX_SPACES];    /*!< Pointer to the pointers of the game's spaces*/
-    int n_spaces;                 /*!< Number of spaces*/
-    Command *last_cmd;            /*!< The code of the last command*/
-    Bool finished;                /*!< TRUE or FALSE if it is finished*/
+    Player *player;                        /*!< Pointer to the player's objects*/
+    Character *characters[MAX_CHARACTERS]; /*!< Pointer to the pointers of the game's characters*/
+    int n_characters;                      /*!< Number of characters*/
+    Object *objects[MAX_OBJECTS];          /*!< Pointer to the pointers of the game's objects*/
+    int n_objects;                         /*!< Number of objects*/
+    Space *spaces[MAX_SPACES];             /*!< Pointer to the pointers of the game's spaces*/
+    int n_spaces;                          /*!< Number of spaces*/
+    Command *last_cmd;                     /*!< The code of the last command*/
+    Bool finished;                         /*!< TRUE or FALSE if it is finished*/
 };
 
 /**
@@ -239,6 +241,43 @@ Player *game_get_player(Game *game)
     return game->player;
 }
 
+/* It gets the pointer of the character with the pass id*/
+Character *game_get_character(Game *game, Id character);
+
+/* It gets the array of the ids of all the characters in the game*/
+Id *game_get_all_characters(Game *game)
+{
+    int i;
+    Id *ids;
+    Id aux;
+
+    /* Control error*/
+    if (!game)
+    {
+        return NULL;
+    }
+
+    /* Allocates the memory for the array of ids*/
+    if (!(ids = (Id *)malloc((game->n_characters) * sizeof(Id))))
+    {
+        return NULL;
+    }
+
+    /* Initializates the array of ids*/
+    for (i = 0; i < game->n_characters; i++)
+    {
+        if ((aux = character_get_id(game->characters[i])) == NO_ID)
+        {
+            free(ids);
+            return NULL;
+        }
+
+        ids[i] = aux;
+    }
+
+    return ids;
+}
+
 /* It obtains the position of the object*/
 Id game_get_object_location(Game *game, Id object)
 {
@@ -333,7 +372,7 @@ Object *game_get_object_with_id(Game *game, Id object)
 Id *game_get_all_objects(Game *game)
 {
     Id *ids;
-    Id object;
+    Id aux;
     int i;
 
     /* Control error*/
@@ -351,16 +390,28 @@ Id *game_get_all_objects(Game *game)
     /* Initializates the array of ids*/
     for (i = 0; i < game->n_objects; i++)
     {
-        if ((object = object_get_id(game->objects[i]) == NO_ID))
+        if ((aux = object_get_id(game->objects[i]) == NO_ID))
         {
             free(ids);
             return NULL;
         }
 
-        ids[i] = object;
+        ids[i] = aux;
     }
 
     return ids;
+}
+
+/* It gets the number of objects in the game*/
+int game_get_n_objects(Game *game)
+{
+    /* Control error*/
+    if (!game)
+    {
+        return -1;
+    }
+
+    return game->n_objects;
 }
 
 /* It adds the new processed object to the game*/
