@@ -5,10 +5,10 @@ TESTS = set_test space_test
 
 all: anthill
 
-anthill: space.o graphic_engine.o game.o game_loop.o command.o game_actions.o game_reader.o object.o player.o
+anthill: space.o graphic_engine.o game.o game_loop.o command.o game_actions.o game_reader.o object.o player.o set.o
 	$(CC) -o $(EXE) $^ -L. -lscreen
 
-space.o: space.c space.h types.h
+space.o: space.c space.h set.h types.h
 	$(CC) $(CFLAGS) -c space.c
 
 graphic_engine.o: graphic_engine.c graphic_engine.h

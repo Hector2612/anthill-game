@@ -128,28 +128,6 @@ Status set_del_id(Set *set, Id id)
     return OK;
 }
 
-/* It prints all the information of the set*/
-Status set_print(Set *set)
-{
-    int i;
-
-    /* Control error*/
-    if (!set)
-    {
-        return ERROR;
-    }
-
-    fprintf(stdout, "Set: \n");
-
-    /* Prints all the ids of the set*/
-    for (i = 0; i < set->n_ids; i++)
-    {
-        fprintf(stdout, "%d. id:%ld\n", i + 1, set->ids[i]);
-    }
-
-    return OK;
-}
-
 /* It finds if an id is in the set*/
 Bool set_find_id(Set *set, Id id)
 {
@@ -207,4 +185,27 @@ int set_find_id_at(Set *set, Id id)
     }
 
     return position_in_array;
+}
+
+
+/* It prints all the information of the set*/
+Status set_print(Set *set)
+{
+    int i;
+
+    /* Control error*/
+    if (!set)
+    {
+        return ERROR;
+    }
+
+    fprintf(stdout, "--> Set: \n");
+
+    /* Prints all the ids of the set*/
+    for (i = 0; i < set->n_ids; i++)
+    {
+        fprintf(stdout, "--> %d. id:%ld\n", i + 1, set->ids[i]);
+    }
+
+    return OK;
 }

@@ -3,8 +3,8 @@
  *
  * @file space.h
  * @author Profesores PPROG
- * @version 0
- * @date 27-01-2025
+ * @version 1
+ * @date 1-03-2025
  * @copyright GNU Public License
  */
 
@@ -17,7 +17,7 @@ typedef struct _Space Space;
 
 /**
  * @brief It creates a new space, allocating memory and initializing its members
- * @author Jaime Luna Lavela
+ * @author Héctor García Pérez
  *
  * @param id the identification number for the new space
  * @return a new space, initialized
@@ -26,7 +26,7 @@ Space *space_create(Id id);
 
 /**
  * @brief It destroys a space, freeing the allocated memory
- * @author Profesores PPROG
+ * @author Héctor García Pérez
  *
  * @param space a pointer to the space that must be destroyed
  * @return OK, if everything goes well or ERROR if there was some mistake
@@ -139,27 +139,47 @@ Status space_set_west(Space *space, Id id);
 Id space_get_west(Space *space);
 
 /**
- * @brief It sets whether the space has an object or not
- * @author Jaime Luna Lavela
+ * @brief It adds an object to the space
+ * @author Héctor García Pérez
  *
  * @param space a pointer to the space
  * @param object the id of the object we want to set
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status space_set_object(Space *space, Id object);
+Status space_add_object(Space *space, Id object);
 
 /**
- * @brief It gets whether the space has an object or not
- * @author Jaime Luna Lavela
+ * @brief It finds if an object is the pass object is in the space
+ * @author Héctor García Pérez
  *
  * @param space a pointer to the space
- * @return the id of the space's object
+ * @param object the id of the object we want to set
+ * @return TRUE, if the object is in the space or FALSE if the object isn't in the space or there was an error
  */
-Id space_get_object(Space *space);
+Bool sapace_find_object(Space *space, Id object);
+
+/**
+ * @brief It removes an object from the space
+ * @author Héctor García Pérez
+ *
+ * @param space a pointer to the space
+ * @param object the id of the object we want to delete
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+Status space_remove_object(Space *space, Id object);
+
+/**
+ * @brief It gets the objects of the space
+ * @author Héctor García Pérez
+ *
+ * @param space a pointer to the space
+ * @return the set of the space
+ */
+const Set *space_get_objects(Space *space);
 
 /**
  * @brief It prints the space information
- * @author Profesores PPROG
+ * @author Héctor García Pérez
  *
  * This fucntion shows the id and name of the space, the spaces that surrounds it and wheter it has an object or not.
  * @param space a pointer to the space

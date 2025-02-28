@@ -9,6 +9,7 @@
  */
 
 #include "space.h"
+#include "set.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,7 +28,7 @@ struct _Space
     Id south;                 /*!< Id of the space at the south */
     Id east;                  /*!< Id of the space at the east */
     Id west;                  /*!< Id of the space at the west */
-    Id object;                /*!< Id of the space's object*/
+    Set *objects;             /*!< Id of the space's object*/
 };
 
 /* space_create allocates memory for a new space and initializes its members*/
@@ -46,6 +47,13 @@ Space *space_create(Id id)
         return NULL;
     }
 
+    /* Create the set for objects*/
+    if (!((newSpace->objects) = set_create()))
+    {
+        free(newSpace);
+        return NULL;
+    }
+
     /* Initialization of an empty space*/
     newSpace->id = id;
     newSpace->name[0] = '\0';
@@ -53,7 +61,6 @@ Space *space_create(Id id)
     newSpace->south = NO_ID;
     newSpace->east = NO_ID;
     newSpace->west = NO_ID;
-    newSpace->object = NO_ID;
 
     return newSpace;
 }
@@ -68,6 +75,12 @@ Status space_destroy(Space *space)
     }
 
     /*Free the allocated memory*/
+
+    if ((space->objects))
+    {
+        set_destroy(space->objects);
+    }
+
     free(space);
 
     return OK;
@@ -223,31 +236,73 @@ Id space_get_west(Space *space)
     return space->west;
 }
 
-/* It sets whether the space has an object or not*/
-Status space_set_object(Space *space, Id object)
+/* It adds an object to the space*/
+Status space_add_object(Space *space, Id object)
 {
     /* Error control*/
-    if (!space)
+    if (!space || object == NO_ID)
     {
         return ERROR;
     }
 
     /* Set the object*/
-    space->object = object;
+    if (set_add_id(space->objects, object) == ERROR)
+    {
+        return ERROR;
+    }
 
     return OK;
 }
 
+/* It removes an object from the space*/
+Status space_remove_object(Space *space, Id object)
+{
+
+    /* Control error*/
+    if (!space || object == NO_ID)
+    {
+        return ERROR;
+    }
+
+    /* Remove the object from the set of the space*/
+    if (set_del_id(space->objects, object) == ERROR)
+    {
+        return ERROR;
+    }
+
+    return OK;
+}
+
+/* It finds if an object is the pass object is in the space*/
+Bool sapace_find_object(Space *space, Id object)
+{
+    /* Control error*/
+    if (!space || object == NO_ID)
+    {
+        return FALSE;
+    }
+
+    /* Finds the object in the set of the space*/
+    if (set_find_id(space->objects, object) == FALSE)
+    {
+        return FALSE;
+    }
+    else
+    {
+        return TRUE;
+    }
+}
+
 /* It gets whether the space has an object or not*/
-Id space_get_object(Space *space)
+const Set *space_get_object(Space *space)
 {
     /* Error control*/
     if (!space)
     {
-        return FALSE;
+        return NULL;
     }
-    
-    return space->object;
+
+    return space->objects;
 }
 
 /* It prints the space information*/
@@ -302,14 +357,10 @@ Status space_print(Space *space)
         fprintf(stdout, "---> No west link.\n");
     }
 
-    /* 3. Print if there is an object in the space or not */
-    if (space_get_object(space))
+    /* 3. Print the set of the Space*/
+    if (set_print(space->objects) == ERROR)
     {
-        fprintf(stdout, "---> Object in the space.\n");
-    }
-    else
-    {
-        fprintf(stdout, "---> No object in the space.\n");
+        return ERROR;
     }
 
     return OK;
