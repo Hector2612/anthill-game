@@ -149,14 +149,14 @@ Id space_get_west(Space *space);
 Status space_add_object(Space *space, Id object);
 
 /**
- * @brief It finds if an object is the pass object is in the space
+ * @brief It finds if the pass object is in the space
  * @author Héctor García Pérez
  *
  * @param space a pointer to the space
  * @param object the id of the object we want to set
  * @return TRUE, if the object is in the space or FALSE if the object isn't in the space or there was an error
  */
-Bool sapace_find_object(Space *space, Id object);
+Bool space_find_object(Space *space, Id object);
 
 /**
  * @brief It removes an object from the space

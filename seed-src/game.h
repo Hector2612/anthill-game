@@ -62,6 +62,16 @@ Status game_destroy(Game *game);
 Space *game_get_space(Game *game, Id id);
 
 /**
+ * @brief It adds the new processed space to the game
+ * @author Profesores PPROG
+ *
+ * @param game a pointer to the game that must be initialized
+ * @param space a pointer to the space that must be added
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+Status game_add_space(Game *game, Space *space);
+
+/**
  * @brief It obtains the position of the player
  * @author Héctor García Pérez
  *
@@ -81,23 +91,74 @@ Id game_get_player_location(Game *game);
 Status game_set_player_location(Game *game, Id id);
 
 /**
+ * @brief It gets the pointer of the player
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to the struct game
+ * @return the pointer to the player
+ */
+
+ Player *game_get_player(Game *game);
+
+/**
  * @brief It obtains the position of the object
  * @author Héctor García Pérez
  *
  * @param game a pointer to game that we are using
+ * @param object the id of the object we want to know its position
  * @return the id of the space where the object is
  */
-Id game_get_object_location(Game *game);
+Id game_get_object_location(Game *game, Id object);
 
 /**
  * @brief It sets the position of the object at the id that correspond
  * @author Héctor García Pérez
  *
  * @param game a pointer to game that we are using
- * @param id the id of the space where the object is going to be placed
+ * @param space the id of the space where the object is going to be placed
+ * @param object the id og the object we want to set in the space
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status game_set_object_location(Game *game, Id id);
+Status game_set_object_location(Game *game, Id space, Id object);
+
+/**
+ * @brief It gets the pointer of the object with the pass name
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to the struct game
+ * @param name_object the name of the object, we are looking for
+ * @return the pointer to the game object
+ */
+Object *game_get_object_with_name(Game *game, char *name_object);
+
+/**
+ * @brief It gets the pointer of the object with the pass id
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to the struct game
+ * @param object the id of the object, we are looking for
+ * @return the pointer to the game object
+ */
+Object *game_get_object_with_id(Game *game, Id object);
+
+/**
+ * @brief It gets an array of all the object's ids of the game
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to the struct game
+ * @return the pointer to the allocated array
+ */
+Id *game_get_all_objects(Game *game);
+
+/**
+ * @brief It adds the new processed object to the game
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to the game that must be initialized
+ * @param object a pointer to the object that must be added
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+Status game_add_object(Game *game, Object *object);
 
 /**
  * @brief It obtains the last instruction send
@@ -139,39 +200,10 @@ Status game_set_finished(Game *game, Bool finished);
 
 /**
  * @brief It prints the information of the game
- * @author Profesores PPROG
+ * @author Héctor García Pérez
  *
  * @param game a pointer to game that we are using
  */
 void game_print(Game *game);
-
-/**
- * @brief It adds the new processed space to the game
- * @author Profesores PPROG
- *
- * @param game a pointer to the game that must be initialized
- * @param space a pointer to the space that must be added
- * @return OK, if everything goes well or ERROR if there was some mistake
- */
-Status game_add_space(Game *game, Space *space);
-
-/**
- * @brief It gets the pointer of the object
- * @author Héctor García Pérez
- *
- * @param game a pointer to the struct game
- * @return the pointer to the game object
- */
-Object *game_get_object(Game *game);
-
-/**
- * @brief It gets the pointer of the player
- * @author Héctor García Pérez
- *
- * @param game a pointer to the struct game
- * @return the pointer to the player
- */
-
-Player *game_get_player(Game *game);
 
 #endif

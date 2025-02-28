@@ -273,8 +273,8 @@ Status space_remove_object(Space *space, Id object)
     return OK;
 }
 
-/* It finds if an object is the pass object is in the space*/
-Bool sapace_find_object(Space *space, Id object)
+/* It finds if the pass object is in the space*/
+Bool space_find_object(Space *space, Id object)
 {
     /* Control error*/
     if (!space || object == NO_ID)
