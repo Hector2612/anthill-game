@@ -104,7 +104,7 @@ Status player_set_name(Player *player, const char *name)
 char *player_get_name(Player *player)
 {
     /* Control error*/
-    if (!player)
+    if (!player || strlen(player) > WORD_SIZE)
     {
         return NULL;
     }
@@ -166,6 +166,7 @@ Status player_set_object(Player *player, Id id)
     return OK;
 }
 
+/* It sets the lifepoints of the player*/
 Status player_set_health(Player *player, int health)
 {
 
@@ -179,13 +180,14 @@ Status player_set_health(Player *player, int health)
     return OK;
 }
 
+/* Gets the information about player's life*/
 int player_get_health(Player *player)
 {
 
     /* Control error*/
     if (!player)
     {
-        return NO_ID;
+        return -1;
     }
 
     return player->health;

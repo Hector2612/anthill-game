@@ -93,7 +93,7 @@ const char *object_get_name(Object *object)
 Status object_set_name(Object *object, const char *name)
 {
     /* Control error*/
-    if (!object || !name)
+    if (!object || !name || strlen(name) > WORD_SIZE)
     {
         return ERROR;
     }

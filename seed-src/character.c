@@ -166,7 +166,7 @@ int character_get_health(Character *character)
     /* Control error*/
     if (!character)
     {
-        return -NO_ID;
+        return -1;
     }
 
     return character->health;
@@ -176,7 +176,7 @@ Status character_set_friendly(Character *character, Bool friend)
 {
 
     /* Control error*/
-    if (!character || friend > TRUE || friend > FALSE)
+    if (!character || (friend != TRUE && friend != FALSE))
     {
         return ERROR;
     }
@@ -202,7 +202,7 @@ Status character_set_message(Character *character, const char *message)
 {
 
     /* Control error*/
-    if (!character || !message)
+    if (!character || !message || strlen(message) > WORD_SIZE)
     {
         return ERROR;
     }
@@ -229,9 +229,6 @@ char *character_get_message(Character *character)
 
 Status character_print(Character *character)
 {
- 
-Status character_print(Character *character)
-{
 
     /* Error Control */
     if (!character)
@@ -240,16 +237,18 @@ Status character_print(Character *character)
     }
 
     /* 1. Print the id , the name and health of the character */
-    fprintf(stdout, "--> %s (Id: %ld; Name: %s; (%d))\n",character->gdesc,character->id, character->name, character->health);
+    fprintf(stdout, "--> %s (Id: %ld; Name: %s; (%d))\n", character->gdesc, character->id, character->name, character->health);
 
     /* 2. Print if the character is enemy or friend and if he must say a message*/
-    if(character->friendly==TRUE){
+    if (character->friendly == TRUE)
+    {
         fprintf(stdout, "--> friend");
-        fprintf(stdout,"-->%s",character->message);
-    }else{
-        fprintf(stdout,"--> enemy");
+        fprintf(stdout, "--> %s", character->message);
+    }
+    else
+    {
+        fprintf(stdout, "--> enemy");
     }
 
     return OK;
-}   
 }

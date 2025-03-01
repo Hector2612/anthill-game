@@ -246,6 +246,25 @@ Bool game_get_finished(Game *game);
 Status game_set_finished(Game *game, Bool finished);
 
 /**
+ * @brief It gets the last message of the game
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to the game that must be initialized
+ * @return a pointer to the string with the character
+ */
+char *game_get_last_message(Game *game);
+
+/**
+ * @brief It sets the last message of the game
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to the game that must be initialized
+ * @param message a pointer to the last message of the game
+ * @return OK, if all went well, or ERROR otherwise
+ */
+Status game_set_last_message(Game *game, char *message);
+
+/**
  * @brief It prints the information of the game
  * @author Héctor García Pérez
  *

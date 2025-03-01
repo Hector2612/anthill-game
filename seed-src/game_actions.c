@@ -13,17 +13,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+
+#define NUM_ALEAT_MAX 9
+#define MAX_CHARACTER_ALEAT_ATTACK 4
 
 /**
-   Private functions
-*/
+ *   Private functions
+ */
 
 /**
  * @brief It proccess the case in which the command is unknown
  * @author Profesores PPROG
  *
  * @param game a pointer to game that we are using
- * @return OK, if everything goes well or ERROR if there was some mistake
  */
 void game_actions_unknown(Game *game);
 
@@ -32,7 +35,6 @@ void game_actions_unknown(Game *game);
  * @author Profesores PPROG
  *
  * @param game a pointer to game that we are using
- * @return OK, if everything goes well or ERROR if there was some mistake
  */
 void game_actions_exit(Game *game);
 
@@ -41,7 +43,6 @@ void game_actions_exit(Game *game);
  * @author Profesores PPROG
  *
  * @param game a pointer to game that we are using
- * @return OK, if everything goes well or ERROR if there was some mistake
  */
 void game_actions_next(Game *game);
 
@@ -50,7 +51,6 @@ void game_actions_next(Game *game);
  * @author Profesores PPROG
  *
  * @param game a pointer to game that we are using
- * @return OK, if everything goes well or ERROR if there was some mistake
  */
 void game_actions_back(Game *game);
 
@@ -59,7 +59,6 @@ void game_actions_back(Game *game);
  * @author Jaime Luna Lavela
  *
  * @param game a pointer to game that we are using
- * @return OK, if everything goes well or ERROR if there was some mistake
  */
 void game_actions_take(Game *game);
 
@@ -68,13 +67,28 @@ void game_actions_take(Game *game);
  * @author Jaime Luna Lavela
  *
  * @param game a pointer to game that we are using
- * @return OK, if everything goes well or ERROR if there was some mistake
  */
 void game_actions_drop(Game *game);
 
 /**
-   Game actions implementation
-*/
+ * @brief It attacks an enemy
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to game that we are using
+ */
+void game_actions_attack(Game *game);
+
+/**
+ * @brief It chats with a friendly character
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to game that we are using
+ */
+void game_actions_chat(Game *game);
+
+/**
+ *   Game actions implementation
+ */
 
 /*It is the function that will respond to our commands, doing what we say if it is possible*/
 Status game_actions_update(Game *game, Command *command)
@@ -111,6 +125,14 @@ Status game_actions_update(Game *game, Command *command)
 
     case DROP:
         game_actions_drop(game);
+        break;
+
+    case ATTACK:
+        game_actions_attack(game);
+        break;
+
+    case CHAT:
+        game_actions_chat(game);
         break;
 
     default:
@@ -264,5 +286,103 @@ void game_actions_drop(Game *game)
     {
         return;
     }
-    
+}
+
+/* It attacks an enemy*/
+void game_actions_attack(Game *game)
+{
+    int num_attack;
+    Player *player;
+    Character *character;
+    Id player_loc, character_id;
+
+    /* Control error*/
+    if (!game)
+    {
+        return;
+    }
+
+    srand(time(NULL));
+
+    /* Gets the location of the player*/
+    if ((player_loc = game_get_player_location(game)) == NO_ID)
+    {
+        return;
+    }
+
+    /* Gets the id of the character in that space*/
+    if ((character_id = space_get_character(player_loc)) == NO_ID)
+    {
+        return;
+    }
+
+    /* Gets the pointer to the character*/
+    if (!(character = game_get_character(game, character_id)))
+    {
+        return;
+    }
+
+    /* Checks if the character is an enemy*/
+    if (character_get_friendly(character) == TRUE)
+    {
+        return;
+    }
+
+    /* Generetes a rand number*/
+    num_attack = (rand() % (NUM_ALEAT_MAX + 1));
+
+    /* Depending of the result the character or the player attack*/
+    if (num_attack <= MAX_CHARACTER_ALEAT_ATTACK)
+    {
+        if (!(player = game_get_player(game)))
+        {
+            return;
+        }
+
+        player_set_health(player, player_get_health(player) - 1);
+    }
+    else
+    {
+        character_set_health(player, character_get_health(character) - 1);
+    }
+}
+
+/* It chats with a friendly character*/
+void game_actions_chat(Game *game)
+{
+    Id player_loc, character_id;
+    Character *character;
+
+    /* Control error*/
+    if (!game)
+    {
+        return;
+    }
+
+    /* Gets the player location*/
+    if ((player_loc = game_get_player_location(game)) == NO_ID)
+    {
+        return;
+    }
+
+    /* Gets the id of the character in that space*/
+    if ((character_id = space_get_character(player_loc)) == NO_ID)
+    {
+        return;
+    }
+
+    /* Gets the pointer of the character*/
+    if (!(character = game_get_character(game, character_id)))
+    {
+        return;
+    }
+
+    /* Checks that the character is friendley*/
+    if (character_get_friendly(character) == FALSE)
+    {
+        return;
+    }
+
+    /* Set the last message of the game to the character's message*/
+    game_set_last_message(game, character_get_message(character));
 }

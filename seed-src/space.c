@@ -104,7 +104,7 @@ Id space_get_id(Space *space)
 Status space_set_name(Space *space, char *name)
 {
     /* Error control*/
-    if (!space || !name)
+    if (!space || !name || strlen(name) > WORD_SIZE)
     {
         return ERROR;
     }

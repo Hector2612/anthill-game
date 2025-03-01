@@ -29,13 +29,14 @@ struct _Game
     int n_objects;                         /*!< Number of objects*/
     Space *spaces[MAX_SPACES];             /*!< Pointer to the pointers of the game's spaces*/
     int n_spaces;                          /*!< Number of spaces*/
+    char last_message[WORD_SIZE + 1];      /*!< The last message that the player has receive*/
     Command *last_cmd;                     /*!< The code of the last command*/
     Bool finished;                         /*!< TRUE or FALSE if it is finished*/
 };
 
 /**
-*    Private functions
-*/
+ *    Private functions
+ */
 
 /**
  * @brief It gets the id of a space with his position in the array
@@ -58,8 +59,8 @@ Id game_get_space_id_at(Game *game, int position);
 Status game_add_character(Game *game, Character *character);
 
 /**
-*    Game interface implementation
-*/
+ *    Game interface implementation
+ */
 
 /* It creates the game initializing the spaces to null or not having yet place the object or player*/
 Status game_create(Game **game)
@@ -70,7 +71,7 @@ Status game_create(Game **game)
     if (!game)
     {
         return ERROR;
-    }  
+    }
 
     /* Allocates memory for the game*/
     if (!((*game) = (Game *)malloc(sizeof(Game))))
@@ -558,6 +559,36 @@ Status game_set_finished(Game *game, Bool finished)
     return OK;
 }
 
+/* It gets the last message of the game*/
+char *game_get_last_message(Game *game)
+{
+    /* Control error*/
+    if (!game)
+    {
+        return NULL;
+    }
+
+    return game->last_message;
+}
+
+/* It sets the last message of the game*/
+Status game_set_last_message(Game *game, char *message)
+{
+    /* Control error*/
+    if (!game || !message || strlen(message) > WORD_SIZE)
+    {
+        return ERROR;
+    }
+
+    /* Copy the message to the game last_message*/
+    if (!strcpy(game->last_message, message))
+    {
+        return ERROR;
+    }
+
+    return OK;
+}
+
 /* It prints the information of the game*/
 void game_print(Game *game)
 {
@@ -583,8 +614,8 @@ void game_print(Game *game)
 }
 
 /**
-*   Implementation of private functions
-*/
+ *   Implementation of private functions
+ */
 
 /* It gets the id of a space with his position in the array */
 Id game_get_space_id_at(Game *game, int position)
