@@ -17,12 +17,13 @@
 
 /**
  * @brief It is the function that will respond to our commands, doing what we say if it is possible
- * @author Profesores PPROG
+ * @author Héctor García Pérez
  *
  * @param game a pointer to game that we are using
  * @param cmd a word with our movement or command
+ * @param specification a pointer to he specification of some commands
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status game_actions_update(Game *game, Command *cmd);
+Status game_actions_update(Game *game, Command *cmd, char *command_specification);
 
 #endif

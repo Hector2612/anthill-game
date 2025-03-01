@@ -124,8 +124,9 @@ Status game_create(Game **game)
         return ERROR;
     }
 
-    /* Initializates the game to not finished*/
+    /* Initializates the game to not finished and the message  to '\0'*/
     (*game)->finished = FALSE;
+    (*game)->last_message[0] = '\0';
 
     return OK;
 }
@@ -162,6 +163,7 @@ Status game_create_from_file(Game **game, char *filename)
 Status game_destroy(Game *game)
 {
     int i = 0;
+
     if (game)
     {
         /* Destroy all the spaces*/
@@ -632,12 +634,16 @@ Id game_get_space_id_at(Game *game, int position)
 /* It adds a new character to the game*/
 Status game_add_character(Game *game, Character *character)
 {
+    /* Cotnrol error*/
     if (!game || !character || game->n_characters >= MAX_CHARACTERS)
     {
         return ERROR;
     }
 
+    /* Adds the new character*/
     game->characters[game->n_characters] = character;
+
+    /* Increments the number of characters*/
     (game->n_characters)++;
 
     return OK;

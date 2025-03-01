@@ -56,15 +56,16 @@ void game_actions_back(Game *game);
 
 /**
  * @brief It proccess the case in which the command is take
- * @author Jaime Luna Lavela
+ * @author Héctor García Pérez
  *
  * @param game a pointer to game that we are using
+ * @param name a pointer to the name of the object we want to take
  */
-void game_actions_take(Game *game);
+void game_actions_take(Game *game, char *name);
 
 /**
  * @brief It proccess the case in which the command is drop
- * @author Jaime Luna Lavela
+ * @author Héctor García Pérez
  *
  * @param game a pointer to game that we are using
  */
@@ -91,7 +92,7 @@ void game_actions_chat(Game *game);
  */
 
 /*It is the function that will respond to our commands, doing what we say if it is possible*/
-Status game_actions_update(Game *game, Command *command)
+Status game_actions_update(Game *game, Command *command, char *command_specification)
 {
     CommandCode cmd;
 
@@ -120,7 +121,7 @@ Status game_actions_update(Game *game, Command *command)
         break;
 
     case TAKE:
-        game_actions_take(game);
+        game_actions_take(game, command_specification);
         break;
 
     case DROP:
@@ -206,18 +207,31 @@ void game_actions_back(Game *game)
     return;
 }
 /* It proccess the case in which the command is take*/
-void game_actions_take(Game *game)
+void game_actions_take(Game *game, char *name)
 {
-    Id obj_loc, player_loc, id_object;
+    Id obj_loc, player_loc, id_object, object_id;
+    Object *object;
 
     /* Control error*/
-    if (!game)
+    if (!game || !name)
+    {
+        return;
+    }
+
+    /* Gets the object's pointer*/
+    if (!(object = game_get_object_with_name(game, name)))
+    {
+        return;
+    }
+
+    /* Gets the object id*/
+    if ((object_id = object_get_id(object)) == NO_ID)
     {
         return;
     }
 
     /* Gets the object location*/
-    if ((obj_loc = game_get_object_location(game)) == NO_ID)
+    if ((obj_loc = game_get_object_location(object, object_id)) == NO_ID)
     {
         return;
     }
@@ -232,13 +246,7 @@ void game_actions_take(Game *game)
     if (player_loc == obj_loc)
     {
         /* It remove the object from the space*/
-        if ((space_set_object(game_get_space(game, obj_loc), NO_ID)) == ERROR)
-        {
-            return;
-        }
-
-        /* Gets the id of the object*/
-        if ((id_object = object_get_id(game_get_object(game))) == NO_ID)
+        if ((space_remove_object(game_get_space(game, obj_loc), object_id)) == ERROR)
         {
             return;
         }
@@ -264,7 +272,7 @@ void game_actions_drop(Game *game)
     }
 
     /* It checks that the player has the object*/
-    if ((obj_loc = game_get_object_location(game)) != NO_ID || player_get_object(player) == NO_ID)
+    if ((id_object = player_get_object(player)) == NO_ID)
     {
         return;
     }
@@ -275,17 +283,14 @@ void game_actions_drop(Game *game)
         return;
     }
 
-    /* Remove the object from the player*/
-    if (player_set_object(player, NO_ID) == ERROR)
+    /* Sets the location of the object in the space with the player*/
+    if (game_set_object_location(game, player_loc, id_object) == ERROR)
     {
         return;
     }
 
-    /* Sets the location of the object in the space with the player*/
-    if (game_set_object_location(game, player_loc) == ERROR)
-    {
-        return;
-    }
+    /* Remove the object from the player*/
+    player_set_object(player, NO_ID);
 }
 
 /* It attacks an enemy*/

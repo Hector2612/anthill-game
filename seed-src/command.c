@@ -15,9 +15,9 @@
 #include <string.h>
 #include <strings.h>
 
-#define CMD_LENGHT 30
+#define CMD_LENGHT 100
 
-char *cmd_to_str[N_CMD][N_CMDT] = {{"", "No command"}, {"", "Unknown"}, {"e", "Exit"}, {"n", "Next"}, {"b", "Back"}, {"t", "Take"}, {"d", "Drop"},{"a", "attack"}, {"c", "Chat"}};
+char *cmd_to_str[N_CMD][N_CMDT] = {{"", "No command"}, {"", "Unknown"}, {"e", "Exit"}, {"n", "Next"}, {"b", "Back"}, {"t", "Take"}, {"d", "Drop"}, {"a", "attack"}, {"c", "Chat"}};
 
 /**
  * @brief Command
@@ -26,7 +26,7 @@ char *cmd_to_str[N_CMD][N_CMDT] = {{"", "No command"}, {"", "Unknown"}, {"e", "E
  */
 struct _Command
 {
-    CommandCode code; /*!< Name of the command */
+    CommandCode code; /*!< Name of the command*/
 };
 
 /* It inicializates the command to NULL*/
@@ -90,7 +90,7 @@ CommandCode command_get_code(Command *command)
 }
 
 /* It realize the command chosen*/
-Status command_get_user_input(Command *command)
+Status command_get_user_input(Command *command, char **command_specification)
 {
     char input[CMD_LENGHT] = "", *token = NULL;
     int i = UNKNOWN - NO_CMD + 1; /* Initializate to 2*/
@@ -125,6 +125,12 @@ Status command_get_user_input(Command *command)
             {
                 i++;
             }
+        }
+
+        if (cmd == TAKE)
+        {
+            token = strtok(NULL, " \n");
+            (*command_specification) = token;
         }
 
         return command_set_code(command, cmd);

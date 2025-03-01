@@ -19,7 +19,6 @@
  *
  * This struct stores all the information of a character.
  */
-
 struct _Character
 {
     Id id;                       /*!< Id of the character*/
@@ -30,9 +29,9 @@ struct _Character
     char message[WORD_SIZE + 1]; /*!< Message of the character*/
 };
 
+/* It creates a new player, allocating memory and initializing its members*/
 Character *character_create(Id id)
 {
-
     Character *new_character = NULL;
 
     /* Control error*/
@@ -59,9 +58,9 @@ Character *character_create(Id id)
     return new_character;
 }
 
+/* It destroys a character, freeing the allocated memory*/
 Status character_destroy(Character *character)
 {
-
     /* Control error*/
     if (!character)
     {
@@ -74,9 +73,9 @@ Status character_destroy(Character *character)
     return OK;
 }
 
+/* It gets the id of a character*/
 Id character_get_id(Character *character)
 {
-
     /* Control error*/
     if (!character)
     {
@@ -86,27 +85,28 @@ Id character_get_id(Character *character)
     return character->id;
 }
 
+/* It sets the name of a character*/
 Status character_set_name(Character *character, const char *name)
 {
-
     /* Control error*/
-    if (!character || !name)
+    if (!character || !name || strlen(name) > WORD_SIZE)
     {
         return ERROR;
     }
 
+    /* Copy the pass name*/
     if (!strcpy(character->name, name))
     {
 
         return ERROR;
-    };
+    }
 
     return OK;
 }
 
+/* It gets the name of a character*/
 char *character_get_name(Character *character)
 {
-
     /* Control error*/
     if (!character)
     {
@@ -116,15 +116,16 @@ char *character_get_name(Character *character)
     return character->name;
 }
 
+/* It sets the description of a character*/
 Status character_set_gdesc(Character *character, const char *gdesc)
 {
-
     /* Control errror*/
-    if (!character || !gdesc)
+    if (!character || !gdesc || strlen(gdesc) > TAMGDESC)
     {
         return ERROR;
     }
 
+    /* Copy the graphic description*/
     if (!strcpy(character->gdesc, gdesc))
     {
 
@@ -134,9 +135,9 @@ Status character_set_gdesc(Character *character, const char *gdesc)
     return OK;
 }
 
+/* It gets the description of a character*/
 char *character_get_gdesc(Character *character)
 {
-
     /* Control error*/
     if (!character)
     {
@@ -146,23 +147,24 @@ char *character_get_gdesc(Character *character)
     return character->gdesc;
 }
 
+/* It sets the health of a character*/
 Status character_set_health(Character *character, int health)
 {
-
     /* Control errror*/
     if (!character || health < 0)
     {
         return ERROR;
     }
 
+    /* Sets the character health*/
     character->health = health;
 
     return OK;
 }
 
+/* It gets the health of a character*/
 int character_get_health(Character *character)
 {
-
     /* Control error*/
     if (!character)
     {
@@ -172,23 +174,24 @@ int character_get_health(Character *character)
     return character->health;
 }
 
+/* It sets if the character is either friend or enemy*/
 Status character_set_friendly(Character *character, Bool friend)
 {
-
     /* Control error*/
     if (!character || (friend != TRUE && friend != FALSE))
     {
         return ERROR;
     }
 
+    /* Sets the friendly status*/
     character->friendly = friend;
 
     return OK;
 }
 
+/* It gets wheter the characther is friend or not*/
 Bool character_get_friendly(Character *character)
 {
-
     /* Control error*/
     if (!character)
     {
@@ -198,15 +201,16 @@ Bool character_get_friendly(Character *character)
     return character->friendly;
 }
 
+/* It sets the message of the character*/
 Status character_set_message(Character *character, const char *message)
 {
-
     /* Control error*/
     if (!character || !message || strlen(message) > WORD_SIZE)
     {
         return ERROR;
     }
 
+    /* Sets the message of the character*/
     if (!strcpy(character->message, message))
     {
         return ERROR;
@@ -215,9 +219,9 @@ Status character_set_message(Character *character, const char *message)
     return OK;
 }
 
+/* It gets the message of a character*/
 char *character_get_message(Character *character)
 {
-
     /* Control error*/
     if (!character)
     {
@@ -227,10 +231,10 @@ char *character_get_message(Character *character)
     return character->message;
 }
 
+/* It prints the character information*/
 Status character_print(Character *character)
 {
-
-    /* Error Control */
+    /* Control error*/
     if (!character)
     {
         return ERROR;

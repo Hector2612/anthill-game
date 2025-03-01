@@ -82,11 +82,12 @@ CommandCode command_get_code(Command *command);
 
 /**
  * @brief It realize the command chosen
- * @author Profesores PPROG
+ * @author Héctor García Pérez
  *
- * @param commando a pointer of that estructure that has a value of the information that will proceed
+ * @param command a pointer of that estructure that has a value of the information that will proceed
+ * @param command_specification a pointer to a command specification
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status command_get_user_input(Command *command);
+Status command_get_user_input(Command *command, char **command_specification);
 
 #endif
