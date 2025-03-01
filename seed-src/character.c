@@ -229,5 +229,27 @@ char *character_get_message(Character *character)
 
 Status character_print(Character *character)
 {
-    
+ 
+Status character_print(Character *character)
+{
+
+    /* Error Control */
+    if (!character)
+    {
+        return ERROR;
+    }
+
+    /* 1. Print the id , the name and health of the character */
+    fprintf(stdout, "--> %s (Id: %ld; Name: %s; (%d))\n",character->gdesc,character->id, character->name, character->health);
+
+    /* 2. Print if the character is enemy or friend and if he must say a message*/
+    if(character->friendly==TRUE){
+        fprintf(stdout, "--> friend");
+        fprintf(stdout,"-->%s",character->message);
+    }else{
+        fprintf(stdout,"--> enemy");
+    }
+
+    return OK;
+}   
 }
