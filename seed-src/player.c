@@ -26,6 +26,7 @@ struct _Player
     char name[WORD_SIZE + 1]; /*!< Name of the player */
     Id location;              /*!< Id of the space where the player is*/
     Id object;                /*!< Id of the player's object*/
+    int health;               /*!< Quantity of life*/
 };
 
 /* It creates a new player, allocating memory and initializing its members*/
@@ -49,6 +50,7 @@ Player *player_create(Id id)
     new_player->name[0] = '\0';
     new_player->location = NO_ID;
     new_player->object = NO_ID;
+    new_player->health = PLAYER_HEALTH;
 
     return new_player;
 }
@@ -164,6 +166,31 @@ Status player_set_object(Player *player, Id id)
     return OK;
 }
 
+Status player_set_health(Player *player, int health)
+{
+
+    /* Control error*/
+    if (!player || health < 0)
+    {
+        return ERROR;
+    }
+
+    player->health = health;
+    return OK;
+}
+
+int player_get_health(Player *player)
+{
+
+    /* Control error*/
+    if (!player)
+    {
+        return NO_ID;
+    }
+
+    return player->health;
+}
+
 /* It prints the player information*/
 Status player_print(Player *player)
 {
@@ -175,8 +202,8 @@ Status player_print(Player *player)
         return ERROR;
     }
 
-    /* 1. Print the id and the name of the player */
-    fprintf(stdout, "--> Player (Id: %ld; Name: %s)\n", player->id, player->name);
+    /* 1. Print the id , the name and health of the player */
+    fprintf(stdout, "--> Player (Id: %ld; Name: %s; (%d))\n", player->id, player->name, player->health);
 
     /* 2. print the location of the player*/
     fprintf(stdout, "--> Location(Id: %ld)\n", player->location);
@@ -195,3 +222,4 @@ Status player_print(Player *player)
 
     return OK;
 }
+
