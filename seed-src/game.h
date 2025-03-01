@@ -111,6 +111,16 @@ Status game_set_player_location(Game *game, Id id);
 Character *game_get_character(Game *game, Id character);
 
 /**
+ * @brief It gets the location of the character
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to the struct game
+ * @param character id of the character
+ * @return the id of the space where the character is or NO_ID if there was some error
+ */
+Id game_get_character_location(Game *game, Id character);
+
+/**
  * @brief It gets the array of the ids of all the characters in the game
  * @author Héctor García Pérez
  *
@@ -118,6 +128,15 @@ Character *game_get_character(Game *game, Id character);
  * @return the pointer to the array of ids
  */
 Id *game_get_all_characters(Game *game);
+
+/**
+ * @brief It gets the number of characters of the game
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to the struct game
+ * @return the number of characters or -1 if there was an error
+ */
+int game_get_n_characters(Game *game);
 
 /**
  * @brief It obtains the position of the object

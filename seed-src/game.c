@@ -34,7 +34,7 @@ struct _Game
 };
 
 /**
-    Private functions
+*    Private functions
 */
 
 /**
@@ -48,7 +48,17 @@ struct _Game
 Id game_get_space_id_at(Game *game, int position);
 
 /**
-    Game interface implementation
+ * @brief It adds a new character to the game
+ * @author Héctor García Pérez
+ *
+ * @param game a pointer to the struct game
+ * @param character a pointer to the character
+ * @return OK, if all went well or ERROR otherwise
+ */
+Status game_add_character(Game *game, Character *character);
+
+/**
+*    Game interface implementation
 */
 
 /* It creates the game initializing the spaces to null or not having yet place the object or player*/
@@ -56,11 +66,13 @@ Status game_create(Game **game)
 {
     int i;
 
+    /* Control error*/
     if (!game)
     {
         return ERROR;
-    }
+    }  
 
+    /* Allocates memory for the game*/
     if (!((*game) = (Game *)malloc(sizeof(Game))))
     {
         return ERROR;
@@ -72,15 +84,30 @@ Status game_create(Game **game)
         (*game)->spaces[i] = NULL;
     }
 
-    /* Initializates all the fields of the struct game*/
+    /* Initializates all the objects to Null*/
+    for (i = 0; i < MAX_OBJECTS; i++)
+    {
+        (*game)->objects[i] = NULL;
+    }
 
+    /* Initializates all the characters to Null*/
+    for (i = 0; i < MAX_CHARACTERS; i++)
+    {
+        (*game)->characters[i] = NULL;
+    }
+
+    /* Initializates the number of spaces, characters and objects to 0*/
     (*game)->n_spaces = 0;
+    (*game)->n_objects = 0;
+    (*game)->n_characters = 0;
 
+    /* Allocates memory for the player*/
     if (!((*game)->player = player_create(5)))
     {
         return ERROR;
     }
 
+    /* Sets the name of the player*/
     if (player_set_name((*game)->player, "Player 1") == ERROR)
     {
         free(*game);
@@ -88,6 +115,7 @@ Status game_create(Game **game)
         return ERROR;
     }
 
+    /* Allocates memory for the last command*/
     if (!((*game)->last_cmd = command_create()))
     {
         free(*game);
@@ -95,6 +123,7 @@ Status game_create(Game **game)
         return ERROR;
     }
 
+    /* Initializates the game to not finished*/
     (*game)->finished = FALSE;
 
     return OK;
@@ -147,6 +176,12 @@ Status game_destroy(Game *game)
         for (i = 0; i < game->n_objects; i++)
         {
             object_destroy(game->objects[i]);
+        }
+
+        /* Destroy all the characters*/
+        for (i = 0; i < game->n_characters; i++)
+        {
+            character_destroy(game->characters[i]);
         }
 
         /* Destroy the player*/
@@ -242,7 +277,52 @@ Player *game_get_player(Game *game)
 }
 
 /* It gets the pointer of the character with the pass id*/
-Character *game_get_character(Game *game, Id character);
+Character *game_get_character(Game *game, Id character)
+{
+    int i;
+    Character *character = NULL;
+
+    /* Control error*/
+    if (!game || character == NO_ID)
+    {
+        return NULL;
+    }
+
+    /* Find the character with that id*/
+    for (i = 0; i < game->n_characters; i++)
+    {
+        if (object_get_id(game->characters[i]) == character)
+        {
+            character = game->characters[i];
+        }
+    }
+
+    return character;
+}
+
+/* It gets the location of the character*/
+Id game_get_character_location(Game *game, Id character)
+{
+    Id character_loc;
+    int i;
+
+    /* Control error*/
+    if (!game || character == NO_ID)
+    {
+        return NO_ID;
+    }
+
+    /* Find the space in which the character is in*/
+    for (i = 0; i < game->n_spaces; i++)
+    {
+        if (space_get_character(game->spaces[i]) == character)
+        {
+            character_loc = space_get_id(game->spaces[i]);
+        }
+    }
+
+    return character_loc;
+}
 
 /* It gets the array of the ids of all the characters in the game*/
 Id *game_get_all_characters(Game *game)
@@ -276,6 +356,18 @@ Id *game_get_all_characters(Game *game)
     }
 
     return ids;
+}
+
+/* It gets the number of characters of the game*/
+int game_get_n_characters(Game *game)
+{
+    /* Control error*/
+    if (!game)
+    {
+        return -1;
+    }
+
+    return game->n_characters;
 }
 
 /* It obtains the position of the object*/
@@ -491,7 +583,7 @@ void game_print(Game *game)
 }
 
 /**
-Implementation of private functions
+*   Implementation of private functions
 */
 
 /* It gets the id of a space with his position in the array */
@@ -504,4 +596,18 @@ Id game_get_space_id_at(Game *game, int position)
     }
 
     return space_get_id(game->spaces[position]);
+}
+
+/* It adds a new character to the game*/
+Status game_add_character(Game *game, Character *character)
+{
+    if (!game || !character || game->n_characters >= MAX_CHARACTERS)
+    {
+        return ERROR;
+    }
+
+    game->characters[game->n_characters] = character;
+    (game->n_characters)++;
+
+    return OK;
 }

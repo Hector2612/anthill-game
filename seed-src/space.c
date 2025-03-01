@@ -28,7 +28,8 @@ struct _Space
     Id south;                 /*!< Id of the space at the south */
     Id east;                  /*!< Id of the space at the east */
     Id west;                  /*!< Id of the space at the west */
-    Set *objects;             /*!< Id of the space's object*/
+    Id character;             /*!< Id of the space's character*/
+    Set *objects;             /*!< Pointer to the space's set of objects*/
 };
 
 /* space_create allocates memory for a new space and initializes its members*/
@@ -61,6 +62,7 @@ Space *space_create(Id id)
     newSpace->south = NO_ID;
     newSpace->east = NO_ID;
     newSpace->west = NO_ID;
+    newSpace->character = NO_ID;
 
     return newSpace;
 }
@@ -294,7 +296,7 @@ Bool space_find_object(Space *space, Id object)
 }
 
 /* It gets whether the space has an object or not*/
-const Set *space_get_object(Space *space)
+Set *space_get_object(Space *space)
 {
     /* Error control*/
     if (!space)
@@ -303,6 +305,33 @@ const Set *space_get_object(Space *space)
     }
 
     return space->objects;
+}
+
+/* It gets the id of the space's character*/
+Id space_get_character(Space *space)
+{
+    /* Control error*/
+    if (!space)
+    {
+        return NO_ID;
+    }
+
+    return space->character;
+}
+
+/* It sets the id of the space's character*/
+Status space_set_character(Space *space, Id character)
+{
+    /* Control errror*/
+    if (!space || character == NO_ID)
+    {
+        return ERROR;
+    }
+
+    /* Set the space's character*/
+    space->character = character;
+
+    return OK;
 }
 
 /* It prints the space information*/

@@ -12,6 +12,7 @@
 #define SPACE_H
 
 #include "types.h"
+#include "set.h"
 
 typedef struct _Space Space;
 
@@ -175,7 +176,26 @@ Status space_remove_object(Space *space, Id object);
  * @param space a pointer to the space
  * @return the set of the space
  */
-const Set *space_get_objects(Space *space);
+Set *space_get_objects(Space *space);
+
+/**
+ * @brief It gets the id of the space's character
+ * @author Héctor García Pérez
+ *
+ * @param space a pointer to the space
+ * @return the id of the character
+ */
+Id space_get_character(Space *space);
+
+/**
+ * @brief It sets the id of the space's character
+ * @author Héctor García Pérez
+ *
+ * @param space a pointer to the space
+ * @param character id of the character we like to change
+ * @return OK if all went well, ERROR otherwise
+ */
+Status space_set_character(Space *space, Id character);
 
 /**
  * @brief It prints the space information
