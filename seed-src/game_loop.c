@@ -120,8 +120,6 @@ void game_loop_run(Game *game, Graphic_engine *gengine)
     /* While the command isn´t exit the loop continue*/
     while ((command_get_code(last_cmd) != EXIT) && (game_get_finished(game) == FALSE))
     {
-        last_cmd_specification = NULL;
-
         graphic_engine_paint_game(gengine, game);
         command_get_user_input(last_cmd, &last_cmd_specification);
         game_actions_update(game, last_cmd, last_cmd_specification);
