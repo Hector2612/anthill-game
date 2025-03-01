@@ -12,6 +12,8 @@
 
 #include "types.h"
 
+#define PLAYER_HEALTH 100
+
 typedef struct _Player Player;
 
 /**
@@ -19,7 +21,7 @@ typedef struct _Player Player;
  * @author Jaime Luna Lavela
  *
  * @param id the identification number for the new player
- * @return a new space, initialized
+ * @return a new player, initialized
  */
 Player *player_create(Id id);
 
@@ -36,7 +38,7 @@ Status player_destroy(Player *player);
  * @brief It gets the id of a player
  * @author Jaime Luna Lavela
  *
- * @param space a pointer to the player
+ * @param player a pointer to the player
  * @return the id of player
  */
 Id player_get_id(Player *player);
@@ -45,7 +47,7 @@ Id player_get_id(Player *player);
  * @brief It sets the name of a player
  * @author Jaime Luna Lavela
  *
- * @param space a pointer to the player
+ * @param player a pointer to the player
  * @param name a string with the name to store
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
@@ -55,7 +57,7 @@ Status player_set_name(Player *player, const char *name);
  * @brief It gets the name of a player
  * @author Jaime Luna Lavela
  *
- * @param space a pointer to the player
+ * @param player a pointer to the player
  * @return  a string with the name of the player
  */
 char *player_get_name(Player *player);
@@ -95,9 +97,28 @@ Id player_get_object(Player *player);
  *
  * @param player a pointer to the player
  * @param id the id of the object we want to set
- * @return the id number of the player's object
+ * @return returns ok or error if there's have been a problem
 */
 Status player_set_object(Player *player, Id id);
+
+/**
+ * @brief It sets the lifepoints of the player
+ * @author Jaime Luna Lavela
+ *
+ * @param player a pointer to the player
+ * @param health cuantity of health
+ * @return error or Ok
+*/
+Status player_set_health(Player *player, int health);
+
+/**
+ * @brief gets the information about player's life
+ * @author Jaime Luna Lavela
+ * 
+ * @param player a pointer to player
+ * @return cuantity of lifepoints
+ */
+int player_get_health(Player *player);
 
 /**
  * @brief It prints the player information
